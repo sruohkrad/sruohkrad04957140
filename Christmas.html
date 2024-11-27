@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Daily Check-In</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('snow-bg.jpg'), url('dkbk.png');
+            background-position: center, top;
+            background-repeat: repeat, repeat;
+            background-size: cover, contain;
+            color: #fff;
+            text-align: center;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        header h3 {
+            margin: 0;
+            font-size: 2.0em;
+            color: #ff0000;
+            text-shadow: 2px 2px #000;
+        }
+
+        .calendar-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* Adjusted for smaller size */
+            justify-content: center;
+            gap: 5px;
+            max-width: 350px; /* Smaller overall width */
+            margin: 10px auto;
+            padding: 0px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+        }
+
+        .calendar-day {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px; /* Reduced padding */
+            background: #008000;
+            color: #fff;
+            font-size: 0.6em; /* Smaller font size */
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 1px 1px 3px #000;
+            cursor: pointer;
+            transition: 0.3s;
+            height: 30px; /* Reduced height */
+            width: 55px; /* Reduced width */
+        }
+
+        .calendar-day:hover {
+            transform: scale(1.1); /* Slight hover effect */
+            background: #ff4500;
+        }
+
+        .calendar-day.claimed {
+            background: #0066cc;
+            cursor: not-allowed;
+        }
+
+        .calendar-day.missed {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+        .calendar-day img {
+            border-radius: 50%;
+            width: 15px; /* Smaller image size */
+            height: 15px;
+        }
+
+        .reward-info {
+            margin-top: 20px;
+            font-size: 0.8em; /* Adjusted text size */
+        }
+
+        #reward {
+            font-weight: bold;
+            color: #ffcc00;
+        }
+
+        #date-time {
+            font-size: 0.7em;
+            margin-top: 8px;
+        }
+
+        .claim-message {
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px;
+            border-radius: 15px;
+            display: none;
+            font-size: 1.0em;
+            z-index: 1000;
+        }
+
+        @keyframes snowfall {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -50px;
+            font-size: 1.5em;
+            color: #fff;
+            animation: snowfall 10s linear infinite;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .claim-icon {
+            width: 30px; /* Adjust size as needed */
+            height: 30px;
+            vertical-align: middle;
+            margin-right: 10px; /* Space between image and text */
+        }
+
+        .back-button {
+            margin-top: 15px;
+            padding: 5px 12px;
+            background: #ff0000;
+            color: #fff;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1em;
+            box-shadow: 2px 2px 5px #000;
+        }
+
+        .back-button:hover {
+            background: #cc0000;
+        }
+
+        .text-container {
+            position: relative;
+            margin: 15px auto;
+            padding: 20px;
+            width: 80%;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: left;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .text-container::before,
+        .text-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            border: 5px solid red;
+            animation: borderFlow 4s linear infinite;
+        }
+
+        .text-container::after {
+            border: 5px solid green;
+            animation-delay: 2s;
+        }
+
+        @keyframes borderFlow {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .text-container p {
+            margin: 5px 0;
+            font-size: 1.0em;
+        }
+
+        .text-container b {
+            color: #ffd700;
+        }
+    
+        .btn {
+            background-color: red;  /* Red background color */
+            color: white;           /* White text color */
+            border: none;           /* Remove border */
+            padding: 6px 13px;     /* Add padding */
+            font-size: 1em;        /* Font size */
+            cursor: pointer;       /* Change cursor to pointer */
+            border-radius: 15px;     /* Optional: Rounded corners */
+            transition: background-color 0.3s ease; /* Smooth hover effect */
+        }
+
+        .btn:hover {
+            background-color: darkred;  /* Darker red when hovered */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="ccc.png" alt="Profile Image" class="profile-image">
+            <h4>Christmas Daily Check-In</h4>
+        </div>
+    </header>
+    <main>
+        <div class="calendar-container">
+            <!-- Calendar grid will be populated here by JavaScript -->
+        </div>
+        <div class="reward-info">
+            <p id="reward-message">Today's reward added to Balance: <span id="reward"></span></p>
+            <p id="date-time"></p>
+        </div>
+        <button class="back-button" onclick="location.href='index.html'">Back</button>
+      <div class="text-container">
+    <p><b>Stand a chance to win up to 100 USDT before christmas and 500 USDT on Christmas🎄:</b></p>
+    <p>REQUIREMENTS:</p>
+    <p>1. Claim the daily check-in</p>
+    <p>2. Refer 5 friends</p>
+</div>
+        <div><p><button onclick="window.location.href='win.html'" class="btn">View Winners</button></p></div>
+        
+        <div id="claim-message" class="claim-message"></div>
+    </main>
+    <script>
+        const rewards = [
+    10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150,
+    160, 170, 180, 190, 200, 210, 220, 230, 240,
+    Math.floor(Math.random() * (500 - 300 + 1)) + 300 // Random reward for Day 25
+];
+
+const calendarContainer = document.querySelector(".calendar-container");
+const rewardMessage = document.getElementById("reward");
+const dateTimeDisplay = document.getElementById("date-time");
+const claimMessage = document.getElementById("claim-message");
+
+let claimedDays = JSON.parse(localStorage.getItem("claimedDays")) || {};
+let currentBalance = JSON.parse(localStorage.getItem("balance")) || 0; // Get the existing balance from localStorage
+
+function getOrdinalSuffix(day) {
+    if (day > 10 && day < 20) return "th";
+    switch (day % 10) {
+        case 1: return "st";
+        case 2: return "nd";
+        case 3: return "rd";
+        default: return "th";
+    }
+}
+
+function createCalendar() {
+    const today = new Date();
+    const currentDay = today.getDate();
+
+    for (let day = 1; day <= 25; day++) {
+        const dayBox = document.createElement("div");
+        dayBox.classList.add("calendar-day");
+        let displayText = `${day}${getOrdinalSuffix(day)}`;
+        if (day === 25) displayText = "Christmas";
+
+        dayBox.textContent = displayText;
+
+        if (claimedDays[day]) {
+            dayBox.classList.add("claimed");
+            dayBox.innerHTML = `${displayText} <img src="d.png" alt="Claimed">`;
+        } else if (day < currentDay) {
+            dayBox.classList.add("missed");
+            dayBox.innerHTML = `${displayText} <img src="cn.png" alt="Missed">`;
+        } else if (day === currentDay) {
+            dayBox.innerHTML = `${displayText} <img src="g.png" alt="Claim">`;
+            dayBox.classList.add("current-day");
+            dayBox.addEventListener("click", () => claimReward(day));
+        }
+
+        calendarContainer.appendChild(dayBox);
+    }
+}
+
+function claimReward(day) {
+    if (!claimedDays[day]) {
+        const reward = rewards[day - 1];
+        claimedDays[day] = reward;
+
+        // Update the balance by adding the claimed reward
+        currentBalance += reward;
+
+        // Save the updated claimedDays and balance in localStorage
+        localStorage.setItem("claimedDays", JSON.stringify(claimedDays));
+        localStorage.setItem("balance", JSON.stringify(currentBalance));
+
+        showClaimMessage(`Congrats! you claimed ${reward} Hours for Day ${day}!`);
+        updateBalanceDisplay();
+        updateCalendar();
+    }
+}
+
+function updateBalanceDisplay() {
+    rewardMessage.textContent = `${currentBalance} Hours`; // Update the displayed balance
+}
+
+function updateCalendar() {
+    calendarContainer.innerHTML = ""; // Clear the calendar
+    createCalendar(); // Rebuild the calendar with updated data
+}
+
+function showClaimMessage(message) {
+    claimMessage.innerHTML = `
+        <img 
+            src="ccc.png" 
+            alt="Claimed Icon" 
+            style="
+                width: 30px; 
+                height: 30px; 
+                margin-right: 10px; 
+                vertical-align: middle; 
+                border-radius: 50%; /* Makes the image circular */
+            "> 
+        ${message}`;
+    claimMessage.style.display = "block";
+    setTimeout(() => {
+        claimMessage.style.display = "none";
+    }, 5000); // Hide message after 5 seconds
+}
+
+function updateDateTime() {
+    const now = new Date();
+    const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+    dateTimeDisplay.textContent = now.toLocaleDateString("en-US", options);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateDateTime();
+    rewardMessage.textContent = `${rewards[new Date().getDate() - 1]} Hours`;
+    createCalendar();
+    updateBalanceDisplay(); // Display the current balance when the page loads
+});
+
+// Add snowfall effect
+const snowflakeChars = ["❄", "❅", "❆"];
+const body = document.querySelector("body");
+
+function createSnowflake() {
+    const snowflake = document.createElement("div");
+    snowflake.className = "snowflake";
+    snowflake.textContent = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+    snowflake.style.left = Math.random() * 100 + "vw";
+    snowflake.style.animationDuration = Math.random() * 3 + 5 + "s";
+    snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+    body.appendChild(snowflake);
+
+    // Remove snowflake after animation ends
+    setTimeout(() => {
+        snowflake.remove();
+    }, 8000);
+}
+
+setInterval(createSnowflake, 300); // Create snowflakes every 300ms
+                    </script>
+                </body>
+</html>

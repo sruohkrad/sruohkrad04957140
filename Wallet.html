@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            background-image: url('dkbk.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: repeat;
+            color: #fff;
+            text-align: center;
+        }
+        header {
+            margin-top: 30px;
+            padding: 0px;
+            border: 2px solid #fff;
+            display: inline-block;
+            border-radius: 10px;
+        }
+        #walletContainer {
+        margin-top: 50px;
+        padding: 10px;
+        border: 0px solid #00ff00;
+        border-radius: 20px;
+        display: inline-block;
+        width: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        animation: borderGlow 4s infinite;
+        box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+    }
+
+    @keyframes borderGlow {
+        0% {
+            border-color: #00ff00;
+            box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+        }
+        50% {
+            border-color: #008000;
+            box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.9);
+        }
+        100% {
+            border-color: #00ff00;
+            box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+        }
+    };
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #fff;
+            border-radius: 15px;
+            background-color: #000;
+            color: #fff;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            border-radius: 15px; /* Rounds edges to make them less sharp */
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #ccc;
+        }
+        .wallet-display {
+            font-size: 18px;
+            color: #fff;
+            background-color: #000;
+            border: 0px solid #fff;
+            border-radius: 20px;
+            padding: 10px;
+            max-width: 250px;
+            margin: 20px auto;
+            word-wrap: break-word;
+        }
+        
+    .task-container {
+        margin-top: 50px;
+        padding: 10px;
+        border: 0.5px solid #00ff00;
+        border-radius: 20px;
+        display: inline-block;
+        width: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        animation: borderGlow 2s infinite;
+        box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+    }
+
+    @keyframes borderGlow {
+        0% {
+            border-color: #00ff00;
+            box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+        }
+        50% {
+            border-color: #008000;
+            box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.9);
+        }
+        100% {
+            border-color: #00ff00;
+            box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+        }
+    }
+        .task-title {
+            border: 0.7px solid #00ff00;
+            padding: 3px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+        }
+        footer {
+    background-color: rgba(0, 0, 0, 0.5);  /* Black background with 50% opacity */
+    width: 90%;                            /* 90% width of the screen */
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    bottom: 5px;                           /* 5px above the bottom of the screen */
+    border: 2px solid white;               /* Adds a white border */
+    border-radius: 30px;                   /* Slightly rounded corners */
+    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    color: #ffffff;                        /* White text color */
+    left: 50%;                             /* Position it at the center */
+    transform: translateX(-50%);           /* Adjust the element by -50% of its width */
+}
+
+/* Navigation Styles */
+        nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+        nav ul li {
+    margin: 0 15px;
+}
+
+        nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+        nav ul li a:hover {
+    color: #ffffff;
+}
+        /* Footer Navigation Image Styles */
+        .footer-nav {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around; /* Space the images evenly */
+    padding: 0;
+    margin:  0;
+}
+
+        .footer-nav li {
+    display: inline;
+}
+
+        .footer-nav img {
+    width: 52px; /* Adjust the size of the images */
+    height: 52px; /* Adjust the size of the images */
+}
+    </style>
+</head>
+<body>
+    <div id="walletContainer">
+        <input type="text" id="walletAddress" placeholder="Paste ton wallet address">
+        <button id="saveButton" onclick="saveWalletAddress()">Save</button>
+        <button id="copyButton" style="display: none;" onclick="copyWalletAddress()">Copy</button>
+    </div>
+
+    <!-- New Task Section -->
+    <section class="task-container">
+        <div class="task-title">
+            <h2>Daily Wallet Activities...</h2>
+        </div>
+        <p>DARK HOURS SET UP GUIDE</p>
+        <button id="startButton" onclick="startTask()">Start</button>
+        <div id="taskContent" style="display:none;">
+            <input type="text" id="verificationCode" placeholder="Enter Code">
+            <button id="verifyButton" onclick="verifyTask()">Verify</button>
+        </div>
+    </section>
+
+    <footer>
+        <nav>
+            <ul class="footer-nav">
+                <li><a href="index.html"><img src="home.png" alt="Home"></a></li>
+                <li><a href="Tasks.html"><img src="earn.png" alt="Tasks"></a></li>
+                <li><a href="Frens.html"><img src="frens.png" alt="Frens"></a></li>
+                <li><a href="Wallet.html"><img src="wallet.png" alt="Wallet"></a></li>
+            </ul>
+        </nav>
+    </footer>
+
+    <script>
+        const currentTaskData = {
+            name: "Dark Hours Set Up Guide",
+            id: "task6",
+            link: "https://youtube.com/shorts/I-2xDrtOVcc?si=saDdda9E7ggLTLGh"
+        };
+
+        // Check if task data or completion status has changed/reset
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedWalletAddress = localStorage.getItem('walletAddress');
+            if (savedWalletAddress) {
+                displaySavedWalletAddress(savedWalletAddress);
+            }
+            
+            const savedTaskData = JSON.parse(localStorage.getItem('taskData'));
+            const taskStatus = localStorage.getItem('taskCompleted');
+
+            // Check if task data has changed
+            if (!savedTaskData || JSON.stringify(savedTaskData) !== JSON.stringify(currentTaskData)) {
+                // If task data has changed, reset task completion status
+                localStorage.removeItem('taskCompleted');
+                localStorage.setItem('taskData', JSON.stringify(currentTaskData));
+                resetTask();  // Reset task to its initial state
+            } else if (taskStatus === 'true') {
+                // If task was already completed, mark it as completed
+                markTaskCompleted();
+            }
+        });
+      
+        // Function to save wallet address to localStorage
+        function saveWalletAddress() {
+            const walletAddressInput = document.getElementById('walletAddress').value;
+            if (walletAddressInput) {
+                localStorage.setItem('walletAddress', walletAddressInput);
+                displayMessage("Wallet address saved successfully!");
+                displaySavedWalletAddress(walletAddressInput);
+            } else {
+                displayMessage("Please enter a valid wallet address.");
+            }
+        }
+
+        // Function to display the saved wallet address and hide the input and save button
+        function displaySavedWalletAddress(walletAddress) {
+            const walletInput = document.getElementById('walletAddress');
+            const saveButton = document.getElementById('saveButton');
+            const copyButton = document.getElementById('copyButton');
+
+            walletInput.value = walletAddress;
+            walletInput.disabled = true;
+            saveButton.style.display = 'none';
+            copyButton.style.display = 'inline';
+        }
+
+        // Function to copy the wallet address to the clipboard
+        function copyWalletAddress() {
+            const walletAddress = document.getElementById('walletAddress').value;
+            navigator.clipboard.writeText(walletAddress).then(() => {
+                displayMessage("Copied to clipboard!");
+            }).catch(err => {
+                displayMessage("Failed to copy to clipboard.");
+            });
+        }
+
+        // Task flow: Start the task and open the link
+        function startTask() {
+            window.open(currentTaskData.link, '_blank');
+            setTimeout(() => {
+                document.getElementById('startButton').style.display = 'none';
+                document.getElementById('taskContent').style.display = 'block';
+            }, 7000); // Wait for 7 seconds before showing the verification code input
+        }
+
+        // Verify the task by checking the input code
+        function verifyTask() {
+            const code = document.getElementById('verificationCode').value;
+            if (code === 'DARKHOURSSETUP') {
+                displayMessage("Wallet activity is successfully recorded!");
+                markTaskCompleted();
+                addHoursToBalance(15); // Add 15 hours to balance in index.html
+            } else {
+                displayMessage("Incorrect pin.");
+            }
+        }
+
+        // Mark the task as completed
+        function markTaskCompleted() {
+            localStorage.setItem('taskCompleted', 'true');
+            document.getElementById('taskContent').innerHTML = '<button disabled>Completed</button>';
+        }
+
+        // Add 15 hours to balance in localStorage (for index.html)
+        function addHoursToBalance(hours) {
+            let balance = localStorage.getItem('balance') || 0;
+            balance = parseInt(balance) + hours;
+            localStorage.setItem('balance', balance);
+        }
+
+        // Reset task when task data changes
+        function resetTask() {
+            document.getElementById('startButton').style.display = 'inline';
+            document.getElementById('taskContent').style.display = 'none';
+            document.getElementById('verificationCode').value = '';
+            displayMessage("New activity!! Please start it now.");
+        }
+
+        // Custom message display function
+        function displayMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messageElement.style.position = 'fixed';
+            messageElement.style.top = '50%';
+            messageElement.style.left = '50%';
+            messageElement.style.transform = 'translate(-50%, -50%)';
+            messageElement.style.backgroundColor = '#333';
+            messageElement.style.color = '#fff';
+            messageElement.style.padding = '10px 30px';
+            messageElement.style.borderRadius = '5px';
+            messageElement.style.zIndex = '1000';
+            messageElement.style.boxShadow = '0 2px 10px rgba(0,0,0,0.5)';
+            document.body.appendChild(messageElement);
+
+            setTimeout(() => {
+                document.body.removeChild(messageElement);
+            }, 7000); // Message will disappear after 7 seconds
+        }
+    </script>
+</body>
+</html>

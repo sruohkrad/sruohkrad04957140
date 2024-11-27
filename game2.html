@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Box Sequence Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('dkbk.png');
+      background-repeat: repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 85vh;
+      margin: 0;
+    }
+
+    /* Selected Box Display Area Styles */
+    .selected-box-display {
+      display: grid;
+      grid-template-columns: repeat(3, 90px); /* Three equal parts */
+      grid-gap: 5px;
+      margin-bottom: 15px;
+      justify-items: center;
+      border-radius: 15px;
+    }
+
+    .selected-box {
+      width: 75px;
+      height: 73px;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #333;
+      border-radius: 15px;
+    }
+    
+
+    .game-board {
+      display: grid;
+      grid-template-columns: repeat(3, 70px);
+      grid-gap: 5px;
+      margin-bottom: 15px;
+    }
+    
+    .selected-box img {
+      height: 70px; /* Adjust width as needed */
+      width: 70px; /* Adjust height as needed */
+      object-fit: contain; /* Ensures the image fits within the specified dimensions */
+    }
+    
+    .box {
+      width: 70px;
+      height: 70px;
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      border: 2px solid #333;
+      border-radius: 15px; /* Blunt edges */
+      cursor: pointer;
+    }
+
+    .box.disabled {
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* Popup message style */
+    .popup-message {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 20px;
+      border-radius: 11px;
+      font-size: 18px;
+      text-align: center;
+      z-index: 1000;
+    }
+
+    .hint-button {
+      display: none;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 15px; /* Rounds edges to make them less sharp */
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    /* Footer styles */
+    footer {
+      margin-top: 20px;
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
+      background-color: rgba(0, 0, 0, 0); /* Fully transparent background */
+    }
+
+    .footer-nav {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer-nav li {
+      margin: 0 20px; /* Space between footer items */
+    }
+
+    .footer-nav img {
+      width: 52px; /* Set icon size */
+      height: auto; /* Maintain aspect ratio */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Selected Box Display Area -->
+  <div class="selected-box-display">
+    <div class="selected-box" id="selected-box1"></div>
+    <div class="selected-box" id="selected-box2"></div>
+    <div class="selected-box" id="selected-box3"></div>
+  </div>
+
+  <!-- Game Board -->
+  <div class="game-board">
+    <div class="box" id="box1" onclick="selectBox(1)"><img src="1.png" alt="1"></div>
+    <div class="box" id="box2" onclick="selectBox(2)"><img src="2.png" alt="2"></div>
+    <div class="box" id="box3" onclick="selectBox(3)"><img src="3.png" alt="3"></div>
+    <div class="box" id="box4" onclick="selectBox(4)"><img src="4.png" alt="4"></div>
+    <div class="box" id="box5" onclick="selectBox(5)"><img src="5.png" alt="5"></div>
+    <div class="box" id="box6" onclick="selectBox(6)"><img src="6.png" alt="6"></div>
+    <div class="box" id="box7" onclick="selectBox(7)"><img src="7.png" alt="7"></div>
+    <div class="box" id="box8" onclick="selectBox(8)"><img src="8.png" alt="8"></div>
+    <div class="box" id="box9" onclick="selectBox(9)"><img src="9.png" alt="9"></div>
+  </div>
+
+  <div class="popup-message" id="popup-message"></div>
+  <button class="hint-button" id="hint-button" onclick="openHint()">Show Hint</button>
+
+  <script>
+    let correctSequence = localStorage.getItem('correctSequence') || '357'; // default correct sequence
+    let selectedSequence = [];
+    let gameEnabled = localStorage.getItem('gameEnabled') !== 'false'; // Check if the game is enabled
+    const disableTimeCorrect = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    const disableTimeIncorrect = 1 * 60 * 60 * 1000; // 1 hour in milliseconds
+
+    function openHint() {
+      window.open('https://youtube.com/shorts/Hk1NLSFCebo?si=KBydrTRY2IylXCd-', '_blank');
+    }
+
+    function checkForSequenceChange() {
+      const storedCorrectSequence = localStorage.getItem('correctSequence');
+      const gameDisabledUntil = localStorage.getItem('gameDisabledUntil');
+
+      if (gameDisabledUntil && Date.now() < parseInt(gameDisabledUntil)) {
+        disableGameUntil(parseInt(gameDisabledUntil));
+      } else {
+        localStorage.removeItem('gameDisabledUntil');
+        gameEnabled = true;
+      }
+
+      if (storedCorrectSequence && storedCorrectSequence !== correctSequence) {
+        resetGame();
+        correctSequence = storedCorrectSequence;
+      }
+    }
+
+    function resetGame() {
+      localStorage.removeItem('selectedBoxes');
+      localStorage.setItem('gameEnabled', 'true');
+      hideMessage();
+      document.querySelectorAll('.box').forEach(box => {
+        box.classList.remove('disabled');
+      });
+      selectedSequence = [];
+      gameEnabled = true;
+    }
+
+    checkForSequenceChange();
+
+    function selectBox(boxNumber) {
+      if (!gameEnabled) {
+        showMessage('Game Over. Wait until it is restarted.');
+        return;
+      }
+
+      if (selectedSequence.length < 3) {
+        selectedSequence.push(boxNumber);
+
+        // Get image from selected box and add to respective part of selected box display
+        const selectedBoxImage = document.querySelector(`#box${boxNumber} img`).cloneNode(true);
+        const displayBox = document.getElementById(`selected-box${selectedSequence.length}`);
+        displayBox.innerHTML = ''; // Clear previous content
+        displayBox.appendChild(selectedBoxImage); // Add selected image to respective section
+      }
+
+      if (selectedSequence.length === 3) {
+        const selected = selectedSequence.join('');
+        if (selected === correctSequence) {
+          rewardPlayer();
+          disableGameForPeriod(disableTimeCorrect, 'So lucky! You earned 5 Hours.');
+        } else {
+          failPlayer();
+          disableGameForPeriod(disableTimeIncorrect, 'Incorrect sequence! View hint, try again in 1 hour.');
+          document.getElementById('hint-button').style.display = 'block';
+        }
+      }
+    }
+
+    function rewardPlayer() {
+      const balance = parseInt(localStorage.getItem('balance')) || 0;
+      const newBalance = balance + 5;
+      localStorage.setItem('balance', newBalance);
+      showMessage('Congratulations! You earned 5 Hours. Your new balance is ' + newBalance + '.');
+    }
+
+    function failPlayer() {
+      showMessage('Incorrect sequence!! View Hint.');
+    }
+
+    function disableGameForPeriod(time, message) {
+      const disableUntil = Date.now() + time;
+      localStorage.setItem('gameDisabledUntil', disableUntil);
+      gameEnabled = false;
+      localStorage.setItem('gameEnabled', 'false');
+      document.querySelectorAll('.box').forEach(box => {
+        box.classList.add('disabled');
+      });
+      showMessage(message);
+
+      setTimeout(() => {
+        gameEnabled = true;
+        localStorage.setItem('gameEnabled', 'true');
+        localStorage.removeItem('gameDisabledUntil');
+        document.querySelectorAll('.box').forEach(box => {
+          box.classList.remove('disabled');
+        });
+
+        document.getElementById('hint-button').style.display = 'none';
+
+        showMessage('A chance!! Try again now');
+        setTimeout(() => {hideMessage();
+                  }, 5000);
+                }, time);
+              }
+
+              // Function to disable the game until a specific time
+              function disableGameUntil(timestamp) {
+                const remainingTime = timestamp - Date.now();
+
+                if (remainingTime > 0) {
+                  gameEnabled = false;
+                  document.querySelectorAll('.box').forEach(box => {
+                    box.classList.add('disabled');
+                  });
+
+                  // Convert the remaining time to hours and minutes
+                  const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+                  const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+
+                  // Show message with time remaining
+                  showMessage(`Game over. Come back after ${hours} hours and ${minutes} minutes.`);
+
+                  setTimeout(() => {
+                    gameEnabled = true;
+                    document.querySelectorAll('.box').forEach(box => {
+                      box.classList.remove('disabled');
+                    });
+                    hideMessage();
+                  }, remainingTime);
+                }
+              }
+
+              // Function to display popup messages
+              function showMessage(msg) {
+                const messageElement = document.getElementById('popup-message');
+                messageElement.textContent = msg;
+                messageElement.style.display = 'block';
+
+                // Hide the message after 5 seconds (if not showing time remaining)
+                setTimeout(() => {
+                  messageElement.style.display = 'none';
+                }, 5000);
+              }
+
+              // Function to hide messages
+              function hideMessage() {
+                document.getElementById('popup-message').style.display = 'none';
+              }
+            </script>
+
+            <footer>
+              <nav>
+                <ul class="footer-nav">
+                  <li><a href="profile2.html"><img src="bk3.png" alt="profile"></a></li>
+                </ul>
+              </nav>
+            </footer>
+
+          </body>
+          </html>

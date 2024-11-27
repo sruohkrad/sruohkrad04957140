@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Hours Backup</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+    body {
+      font-family: 'Pacifico', cursive;
+      background: url('dkbk.png') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 75vh; /* Reduced page height */
+      margin: 0;
+      padding: 5px 0;
+    }
+
+    .backup-paper {
+      width: 75%;
+      max-width: 700px;
+      border: 2px solid #000;
+      border-radius: 12px;
+      background: linear-gradient(
+        90deg,
+        #fef5d4, #ffe9c4, #ffd5aa, #ffb4a9, #ff91aa, #ff72b2, #5ac8fa, #f4c4f3,  
+        #e17ec6, #c289df, #9b9ef2, #73b8ff, #7ad4ff, #e8f8a2, #a3c4f9,  
+        #9ff5f3, #c5f8c4, #b5f7d8, #f8f9b5, #e6d7a4, #b8e1ff,  
+        #d7a8f5, #f6e0a6, #c3e9b5, #ffd7cc, #aed4f9,
+        #d8a7aa, #f89bae, #f0d4f7, #a6f7c8, 
+        #6fc2eb, #e3a5c7, #c8a6f7,
+        #ffdea6, #fac8e0, 
+        #b2e8a6
+      );
+      color: #333;
+      padding: 5px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    /* Parallel lines on the edges */
+    .backup-paper:before,
+    .backup-paper:after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background-color: #000;
+      top: 0;
+    }
+
+    .backup-paper:before {
+      left: 3px; /* Left edge */
+    }
+
+    .backup-paper:after {
+      right: 3px; /* Right edge */
+    }
+
+    .backup-paper .header,
+    .backup-paper .body p,
+    .backup-paper .footer p {
+      text-decoration: underline; /* Underline all text */
+    }
+
+    .header {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .body p {
+      margin: 10px 0;
+      font-size: 1.0rem;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .left img {
+      width: 80px; /* Adjust the size of the image */
+      height: auto;
+    }
+
+    .right #datetime {
+      font-size: 1.0rem;
+      text-align: right;
+    }
+
+    .note {
+     font-size: 0.7rem;
+     margin: 0px 0;
+     padding: 2px;
+     border: 0px solid #00ff00;
+     border-radius: 12px;
+     display: inline-block;
+     width: 75%;
+     max-width: 600px;
+     text-align: left;
+     color: #fff;
+     background-color: rgba(0, 0, 0, 0.7);
+     animation: borderGlow 2s infinite;
+     box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+       }
+
+    @keyframes borderGlow {
+        0% {
+     border-color: #00ff00;
+     box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.7);
+        }
+        50% {
+     border-color: #008000;
+     box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.9);
+        }
+        100% {
+     border-color: #00ff00;
+     box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.7);
+        }
+        };
+
+    
+    #back-btn {
+      padding: 4px 12px;
+      background-color: red;
+      color: #fff;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      margin: 9px 4px;
+    }
+
+    #send-backup-btn {
+      padding: 3px 9px;
+      background-color: green;
+      color: #fff;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      margin: 9px 4px;
+    }
+
+    #back-btn:hover{
+      background-color: red;
+      border-radius: 15px;
+      color: #fff;
+    }
+    #send-backup-btn:hover {
+      background-color: #555;
+    }
+
+    #send-backup-btn {
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Footer styles */
+    footer {
+      margin-top: 20px;
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
+      background-color: rgba(0, 0, 0, 0); /* Fully transparent background */
+    }
+
+    .footer-nav {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer-nav li {
+      margin: 0 20px; /* Space between footer items */
+    }
+
+    .footer-nav img {
+      width: 52px; /* Set icon size */
+      height: auto; /* Maintain aspect ratio */
+    }
+  </style>
+</head>
+<body>
+  <div class="backup-paper">
+    <h1 class="header">DARK HOURS BACK UP</h1>
+    <div class="body">
+      <p>Username: <span id="username"></span></p>
+      <p>Balance: <span id="balance"></span></p>
+      <p>Wallet Address: <span id="walletAddress"></span></p>
+      <p>Level: <span id="level">Shadow</span></p> <!-- Added level display -->
+    </div>
+    <div class="footer">
+      <div class="left">
+        <img src="st.png" alt="Stamp">
+      </div>
+      <div class="right">
+        <p id="datetime"></p>
+      </div>
+    </div>
+    <button id="send-backup-btn" onclick="sendBackup()">Send Backup</button>
+  </div>
+
+  <div class="note">
+    <p>NOTE:</p>
+    <p>1. Screenshot and send to @HOURS_BKP_BOT for backup.</p>
+    <p>2. Don't share your back up Paper with friends, Your information is your default password.</p>
+    <p>3. Don't change any of the above-listed as backup won't be approved by the Bot if changed.</p>
+  </div>
+  <footer>
+              <nav>
+                <ul class="footer-nav">
+                  <li><a href="profile.html"><img src="bk3.png" alt="profile"></a></li>
+                </ul>
+              </nav>
+  </footer>    
+  <script>
+    // Function to determine user level based on balance
+    function getUserLevel(balance) {
+      if (balance <= 80) return "Shadow👤";
+      if (balance <= 160) return "Phantom🏅";
+      if (balance <= 300) return "Shroud☠️";
+      if (balance <= 430) return "Nightmarer🏆";
+      if (balance <= 600) return "Zombie🎖️";
+      if (balance <= 1100) return "Witch🧙‍♀️";
+      if (balance <= 1700) return "Whisperer🥉";
+      if (balance <= 3900) return "Ghost🥈";
+      if (balance <= 8000) return "Vampire🥇";
+      if (balance <= 12000) return "Night Legend🧝";
+      if (balance <= 20000) return "Dreamer💭";
+      return "DarkHours Lord👑"; // 20010 to 1,000,000+ hours
+    }
+
+    // Retrieve values from localStorage
+    const username = localStorage.getItem("username") || "N/A";
+    const balance = parseFloat(localStorage.getItem("balance")) || 0; // Convert to number
+    const wallet = localStorage.getItem("walletAddress") || "N/A";
+
+    // Get the user level based on the balance
+    const level = getUserLevel(balance);
+    document.getElementById("level").innerText = level;  // Display the level
+
+    // Populate the backup paper
+    document.getElementById("username").textContent = username;
+    document.getElementById("balance").textContent = balance + " hours"; // Add " hours" after the balance
+
+    // Function to break the wallet address if it exceeds 22 characters
+    function formatWalletAddress(walletAddress) {
+      if (walletAddress.length > 22) {
+        return walletAddress.slice(0, 22) + "<br>" + walletAddress.slice(22);
+      }
+      return walletAddress;
+    }
+
+    // Format and display the wallet address
+    document.getElementById("walletAddress").innerHTML = formatWalletAddress(wallet);
+
+    // Display current time and date
+    function updateTime() {
+      const now = new Date();
+      const time = now.toLocaleTimeString();
+      const date = now.toLocaleDateString();
+      document.getElementById("datetime").textContent = `${time} | ${date}`;
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    // Redirect to profile page when clicking the "Back to Profile" button
+    function goToProfile() {
+      window.location.href = "profile.html";
+    }
+
+    // Redirect to the Telegram bot when clicking "Send Backup"
+    function sendBackup() {
+      window.open("https://t.me/HOURS_BKP_BOT?start=r07425497236", "_blank");
+    }
+  </script>
+</body>
+</html> 

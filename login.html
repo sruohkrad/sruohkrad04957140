@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('dkbk.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: repeat;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            padding: 5px;
+        }
+        .message {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: black;
+            color: white;
+            padding: 10px;
+            border: 1px solid #000;
+            z-index: 1000;
+            border-radius: 10px;
+        }
+        .warning {
+            position: relative;
+            margin: 15px auto;
+            padding: 20px;
+            width: 80%;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: left;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .warning::before,
+        .warning::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            border: 5px solid red;
+            animation: borderFlow 4s linear infinite;
+        }
+
+        .warning::after {
+            border: 5px solid green;
+            animation-delay: 2s;
+        }
+
+        @keyframes borderFlow {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .warning p {
+            margin: 5px 0;
+            font-size: 1.0em;
+        }
+
+        .warning b {
+            color: #ffd700;
+        }
+
+        .centered {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .backup-link {
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            display: block;
+        }
+        .backup-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Dark Hours</h1>
+    </header>
+    <section class="centered">
+        <p>Please enter your Telegram username:</p>
+        <input type="text" id="username" placeholder="Enter your Telegram username">
+        <button onclick="login()">Sign Up</button>
+        <span class="backup-link" onclick="openBackupPage()">I have a backup!!.</span>
+    </section>
+
+    <div class="warning">
+        <p><strong>WARNING ⚠️:</strong></p>
+        <p>1. Use your Telegram username only.</p>
+        <p>2. Start your username with @ (Example: @abc1).</p>
+        <p>3. Don't lose your Telegram App or Phone;</p>
+        <li>In case you have to;</li>
+        <li>Contact Support bot and Backup your account.</li>
+        <p>4. Your asset security rests on your shoulders.</p>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            if (username) {
+                localStorage.setItem('username', username);
+                window.location.href = 'index.html';
+            } else {
+                showMessage('Please enter a Telegram username'); // Custom error message
+            }
+        }
+
+        function showMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messageElement.className = 'message';
+
+            document.body.appendChild(messageElement);
+            setTimeout(() => {
+                document.body.removeChild(messageElement);
+            }, 3000); // Remove the message after 3 seconds
+        }
+
+        function openBackupPage() {
+            window.location.href = 'bk2.html'; // Navigate to bk2.html page
+        }
+    </script>
+</body>
+</html>

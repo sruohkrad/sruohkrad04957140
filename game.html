@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Number Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('dkbk.png'); /* Set the background image */
+      background-size: cover; /* Cover the entire screen */
+      background-position: center; /* Center the background image */
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      color: white; /* Change text color to white for better visibility */
+    }
+
+    .game-container {
+      width: 88%;
+      max-width: 230px; /* Reduced maximum width */
+      margin: 2px auto; /* Adjusted margin */
+      background: rgba(0, 0, 0, 0.1); 
+      padding: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      }
+        /* Add the border glow animation */
+        @keyframes borderGlow {
+          0% {
+            border-color: rgba(0, 0, 255, 0.5);
+            box-shadow: 0 0 5px rgba(0, 0, 255, 0.5), 0 0 15px rgba(0, 0, 255, 0.3);
+          }
+          50% {
+            border-color: rgba(255, 0, 255, 0.5);
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5), 0 0 20px rgba(255, 0, 255, 0.3);
+          }
+          100% {
+            border-color: rgba(0, 255, 0, 0.5);
+            box-shadow: 0 0 5px rgba(0, 255, 0, 0.5), 0 0 15px rgba(0, 255, 0, 0.3);
+          }
+        }
+
+        /* Apply the glow animation to the game container */
+        .game-container {
+          animation: borderGlow 2s infinite alternate;
+          border: 2px solid transparent; /* Ensure a defined border for the animation */
+        }
+    }
+
+    h1 {
+      color: #fff; /* White text for the title */
+    }
+
+    .image-box {
+      margin: 8px 0;
+      padding: 8px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    input[type="number"] {
+      width: 50px;
+      padding: 5px;
+      border-radius: 15px
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    button {
+      padding: 8px 16px; /* Adjusted padding */
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 15px; /* Rounds edges to make them less sharp */
+      cursor: pointer;
+      margin-right: 10px; /* Space between buttons */
+    }
+
+    button:disabled {
+      background-color: #ccc;
+    }
+
+    /* Footer styles */
+    footer {
+      margin-top: 20px;
+      width: 100%;
+      text-align: center;
+      padding: 10px 0;
+      background-color: rgba(0, 0, 0, 0); /* Fully transparent background */
+    }
+
+    .footer-nav {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .footer-nav li {
+      margin: 0 20px; /* Space between footer items */
+    }
+
+    .footer-nav img {
+      width: 52px; /* Set icon size */
+      height: auto; /* Maintain aspect ratio */
+    }
+
+    /* Pop-up message styling */
+    .message-popup {
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      color: white;
+      border-radius: 10px;
+      display: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <div id="image-boxes">
+      <div class="image-box"><img src="4.png" alt="Blue Image" style="width: 50px;">: <input type="number" id="blue-input" /></div>
+      <div class="image-box"><img src="8.png" alt="Green Image" style="width: 50px;">: <input type="number" id="green-input" /></div>
+      <div class="image-box"><img src="5.png" alt="Red Image" style="width: 50px;">: <input type="number" id="red-input" /></div>
+      <div class="image-box"><img src="7.png" alt="Yellow Image" style="width: 50px;">: <input type="number" id="yellow-input" /></div>
+    </div>
+
+    <div class="button-container">
+      <button id="start-button" style="display: none;">Hint</button>
+      <button id="submit-button">Submit</button>
+    </div>
+  </div>
+
+  <!-- Pop-up message div -->
+  <div id="message-popup" class="message-popup"></div>
+
+  <footer>
+    <nav>
+      <ul class="footer-nav">
+        <li><a href="profile2.html"><img src="bk3.png" alt="Profile"></a></li>
+      </ul>
+    </nav>
+  </footer>
+
+  <script>
+    const correctAnswers = {
+      blue: 1,
+      green: 3,
+      red: 1,
+      yellow: 3
+    };
+
+    let isGameDisabled = false;
+
+    // Load game state from localStorage
+    function loadGameState() {
+      const storedValues = JSON.parse(localStorage.getItem('gameState'));
+      if (storedValues) {
+        document.getElementById('blue-input').value = storedValues.blue;
+        document.getElementById('green-input').value = storedValues.green;
+        document.getElementById('red-input').value = storedValues.red;
+        document.getElementById('yellow-input').value = storedValues.yellow;
+
+        // Check if game is disabled
+        const disableEndTime = localStorage.getItem('disableEndTime');
+        if (disableEndTime && Date.now() < disableEndTime) {
+          isGameDisabled = true;
+          showRemainingTime(disableEndTime);
+        }
+      }
+    }
+
+    // Save game state to localStorage
+    function saveGameState() {
+      const gameState = {
+        blue: document.getElementById('blue-input').value,
+        green: document.getElementById('green-input').value,
+        red: document.getElementById('red-input').value,
+        yellow: document.getElementById('yellow-input').value,
+      };
+      localStorage.setItem('gameState', JSON.stringify(gameState));
+    }
+
+    // Function to show pop-up message for 5 seconds
+    function showMessage(message) {
+      const messagePopup = document.getElementById('message-popup');
+      messagePopup.innerText = message;
+      messagePopup.style.display = 'block';
+
+      setTimeout(() => {
+        messagePopup.style.display = 'none';
+      }, 5000); // Hide the message after 5 seconds
+    }
+
+    // Function to show the remaining time before the game can be played again
+    function showRemainingTime(disableEndTime) {
+      const remainingTime = disableEndTime - Date.now();
+      const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+      const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+      let timeMessage = `Game over, come back `;
+      if (hours > 0) {
+        timeMessage += `after ${hours} hours, ${minutes} minutes, and ${seconds} seconds.`;
+      } else if (minutes > 0) {
+        timeMessage += `after ${minutes} minutes, and ${seconds} seconds.`;
+      } else {
+        timeMessage += `after ${seconds} seconds.`;
+      }
+
+      showMessage(timeMessage);
+    }
+
+    // Function to add 5 hours to the mining app balance
+    function rewardPlayer() {
+      let currentBalance = parseInt(localStorage.getItem('balance')) || 0;
+      currentBalance += 5; // Add 5 hours to the balance
+      localStorage.setItem('balance', currentBalance);
+      showMessage(`Correct! You earned 5 hours. Your new balance is ${currentBalance} hours.`);
+    }
+
+    // Function to check the answers
+    function checkAnswers() {
+      saveGameState(); // Save current game state before checking answers
+
+      if (isGameDisabled) {
+        showRemainingTime(localStorage.getItem('disableEndTime'));
+        return;
+      }
+
+      const blueInput = parseInt(document.getElementById('blue-input').value);
+      const greenInput = parseInt(document.getElementById('green-input').value);
+      const redInput = parseInt(document.getElementById('red-input').value);
+      const yellowInput = parseInt(document.getElementById('yellow-input').value);
+
+      const inputs = {
+        blue: blueInput,
+        green: greenInput,
+        red: redInput,
+        yellow: yellowInput
+      };
+
+      let allCorrect = true;
+
+      for (const color in inputs) {
+        if (inputs[color] !== correctAnswers[color]) {
+          allCorrect = false;
+          break;
+        }
+      }
+
+      const startButton = document.getElementById('start-button');
+
+      if (allCorrect) {
+        rewardPlayer();
+        isGameDisabled = true;
+        localStorage.setItem('disableEndTime', Date.now() + 86400000); // 24 hours cooldown
+        setTimeout(() => {
+          isGameDisabled = false;
+          showMessage('You can play again.');
+          startButton.style.display = 'none'; // Hide the start button
+        }, 86400000); // Disable for 24 hours
+      } else {
+        showMessage('Incorrect! Game disabled for 30 seconds, View hint.');
+        isGameDisabled = true;
+        startButton.style.display = 'block'; // Show the start button
+        startButton.onclick = function() {
+          window.open('https://youtube.com/shorts/S4WWwnRap2Q?si=Mwh_UoVO7j-JwED8', '_blank');
+        };
+        localStorage.setItem('disableEndTime', Date.now() + 30000); // 30 seconds cooldown
+        const disableEndTime = Date.now() + 30000; // 30 seconds cooldown
+        showRemainingTime(disableEndTime); // Show remaining time for the 30-second cooldown
+
+        setTimeout(() => {
+          isGameDisabled = false;
+          showMessage('You can play again.');
+          startButton.style.display = 'none'; // Hide the start button
+        }, 30000); // Disable for 30 seconds
+      }
+    }
+
+    // Load game state when the page loads
+    window.onload = loadGameState;
+
+    // Add event listener to submit button
+    document.getElementById('submit-button').addEventListener('click', checkAnswers);
+  </script>
+</body>
+</html>

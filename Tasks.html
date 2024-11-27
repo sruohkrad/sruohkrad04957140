@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('dkbk.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        header {
+            background-color: transparent;
+            color: #fff;
+            text-align: center;
+            padding: 0.4rem 0;
+            font-size: 0.8rem;
+            border: 2px solid red;
+            border-radius: 20px;
+        }
+
+        #taskList {
+            max-height: 60vh;
+            overflow-y: auto;
+            margin: 1rem auto;
+            padding: 0;
+            list-style: none;
+            width: 88%;
+        }
+
+        .task {
+            margin: 1rem;
+            padding: 0.3em 0;
+            border: 0px solid #00ff00;
+            border-radius: 20px;
+            display: inline-block;
+            width: 275px;
+            text-align: center;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: borderGlow 3s infinite;
+            box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+       }
+
+    @keyframes borderGlow {
+        0% {
+            border-color: #00ff00;
+            box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+        }
+        50% {
+            border-color: #008000;
+            box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.9);
+        }
+        100% {
+            border-color: #00ff00;
+            box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+        }
+        };
+        .task button {
+            margin-top: 1rem;
+            padding: 0.7rem 1.5rem;
+            width: 80%;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            box-shadow: 0px 6px 10px rgba(0, 255, 0, 0.5);
+            background-color: #28a745;
+            color: #fff;
+        }
+        
+
+        .task button.green {
+            background-color: #28a745;
+            color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+        }
+
+        .task button.green:hover {
+            background-color: #218838;
+            box-shadow: 0px 6px 10px rgba(40, 167, 69, 0.5);
+            border: 2px solid #ddd;
+            border-radius: 15px;
+        }
+
+        .task button.red {
+            background-color: #dc3545;
+            color: #fff;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+        }
+
+        .task button.red:hover {
+            background-color: #c82333;
+            box-shadow: 0px 6px 10px rgba(220, 53, 69, 0.5);
+            border: 2px solid #ddd;
+            border-radius: 15px;
+        }
+
+        .task button.white {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            cursor: default;
+         }
+
+         .task button.white:hover {
+            background-color: #e2e6ea;
+            box-shadow: 0px 6px 10px rgba(40, 167, 69, 0.5);
+            border: 2px solid #ddd;
+            border-radius: 15px;
+     }
+
+        .task button.skyblue {
+           background-color: #17a2b8;
+           color: #fff;
+           border: 2px solid #ddd;
+           border-radius: 15px;
+      }
+
+      .task button.skyblue:hover {
+           background-color: #138496;
+           box-shadow: 0px 6px 10px rgba(23, 162, 184, 0.5);
+           border: 2px solid #ddd;
+           border-radius: 15px;
+      }
+
+      .task button.violet-blue {
+           background-color: #6C33FF;
+           color: #fff;
+           border: 2px solid #ddd;
+           border-radius: 15px;
+      }
+
+       .task button.violet-blue:hover {
+           background-color: #5728cc;
+           box-shadow: 0px 6px 10px rgba(108, 51, 255, 0.5);
+           border: 2px solid #ddd;
+           border-radius: 15px;
+       }
+
+       .task button:disabled {
+           background-color: #ddd;
+           color: #000;
+           border: 2px solid #ddd;
+           border-radius: 15px;
+           cursor: not-allowed;
+           box-shadow: 0px 6px 10px rgba(40, 167, 69, 0.5);
+       }
+
+        input {
+            background-color: transparent;
+            color: #fff;
+            border: 1px solid #ddd;
+            padding: 0.1rem;
+            border-radius: 15px;
+            width: 80%;
+            margin-top: 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 1rem;
+            border-radius: 15px;
+            z-index: 1000;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 90%;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 5px;
+            border: 2px solid white;
+            border-radius: 30px;
+            box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+            color: #ffffff;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .footer-nav {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-around;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-nav li {
+            display: inline;
+        }
+
+        .footer-nav img {
+            width: 52px;
+            height: 52px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h3>Complete the task fairly or claim your hours fearly</h3>
+</header>
+
+<ul id="taskList">
+    <!-- Dynamically generated tasks -->
+</ul>
+
+<footer>
+    <nav>
+        <ul class="footer-nav">
+            <li><a href="index.html"><img src="home.png" alt="Home"></a></li>
+            <li><a href="Tasks.html"><img src="earn.png" alt="Tasks"></a></li>
+            <li><a href="Frens.html"><img src="frens.png" alt="Frens"></a></li>
+            <li><a href="Wallet.html"><img src="wallet.png" alt="Wallet"></a></li>
+        </ul>
+    </nav>
+</footer>
+
+<script>
+    const tasks = [
+        { id: 6, description: "Subscribe to our YouTube (+10 hours)", link: "https://www.youtube.com/@globaldarkhours", code: "1234" },
+        { id: 7, description: "Follow our Twitter (+10 hours)", link: "https://x.com/globaldarkhours?t=TMWb9X-ZucSkKRfNNKVhJg&s=09", code: "5678" },
+        { id: 8, description: "Join our Telegram (+10 hours)", link: "https://t.me/Official_Dark_Hours", code: "1011" },
+        { id: 4, description: "Follow our Instagram (+10 hours)", link: "https://www.instagram.com/officialdarkhours?igsh=MXBwOXRwbnZtNml6bA==", code: "1213" },
+        { id: 5, description: "Follow our TikTok (+10 hours)", link: "https://www.tiktok.com/@officialdarkhours?_t=8rbp4JIrHQG&_r=1", code: "1415" },
+    ];
+
+    const taskList = document.getElementById('taskList');
+    let balance = localStorage.getItem('balance') ? parseInt(localStorage.getItem('balance')) : 0;
+    const completedTasks = JSON.parse(localStorage.getItem('completedTasks')) || [];
+
+    function displayMessage(message) {
+        const messageElement = document.createElement('div');
+        messageElement.className = 'message';
+        messageElement.textContent = message;
+        document.body.appendChild(messageElement);
+
+        setTimeout(() => {
+            document.body.removeChild(messageElement);
+        }, 3000);
+    }
+
+    function saveCompletedTask(taskId) {
+        completedTasks.push(taskId);
+        localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+    }
+
+    tasks.forEach(task => {
+        const taskItem = document.createElement('li');
+        taskItem.className = 'task';
+
+        if (completedTasks.includes(task.id)) {
+            taskItem.innerHTML = `
+                <p>${task.description}</p>
+                <button class="white" disabled>Completed</button>
+            `;
+        } else {
+            taskItem.innerHTML = `
+                <p>${task.description}</p>
+                <button id="start-${task.id}" class="skyblue">Start</button>
+            `;
+        }
+
+        taskList.appendChild(taskItem);
+
+        if (!completedTasks.includes(task.id)) {
+            const startButton = document.getElementById(`start-${task.id}`);
+
+            startButton.addEventListener('click', () => {
+                window.open(task.link, '_blank');
+
+                setTimeout(() => {
+                    startButton.classList.add('hidden');
+
+                    const codeInput = document.createElement('input');
+                    codeInput.type = 'text';
+                    codeInput.placeholder = 'Type your code';
+
+                    const submitButton = document.createElement('button');
+                    submitButton.textContent = 'Submit';
+
+                    submitButton.addEventListener('click', () => {
+                        if (codeInput.value === task.code) {
+                            submitButton.classList.add('hidden');
+                            codeInput.classList.add('hidden');
+
+                            const claimButton = document.createElement('button');
+                            claimButton.textContent = 'Claim';
+                            claimButton.className = 'green';
+
+                            claimButton.addEventListener('click', () => {
+                                balance += 10;
+                                localStorage.setItem('balance', balance);
+                                claimButton.classList.add('hidden');
+
+                                const completedButton = document.createElement('button');
+                                completedButton.textContent = 'Completed';
+                                completedButton.className = 'white';
+                                completedButton.disabled = true;
+                                taskItem.appendChild(completedButton);
+
+                                saveCompletedTask(task.id);
+                            });
+
+                            taskItem.appendChild(claimButton);
+                        } else {
+                            displayMessage("Incorrect pin, please redo the task");
+
+                            submitButton.classList.add('hidden');
+                            codeInput.classList.add('hidden');
+
+                            const redoButton = document.createElement('button');
+                            redoButton.textContent = 'Redo';
+                            redoButton.className = 'red';
+
+                            redoButton.addEventListener('click', () => {
+                                window.open(task.link, '_blank');
+
+                                setTimeout(() => {
+                                    redoButton.classList.add('hidden');
+                                    codeInput.classList.remove('hidden');
+                                    submitButton.classList.remove('hidden');
+                                }, 4000);
+                            });
+
+                            taskItem.appendChild(redoButton);
+                        }
+                    });
+
+                    taskItem.appendChild(codeInput);
+                    taskItem.appendChild(submitButton);
+                }, 4000);
+            });
+        }
+    });
+</script>
+</body>
+</html>

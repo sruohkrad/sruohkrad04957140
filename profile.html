@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Dark Hours</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('dkbk.png'); /* Set background image */
+            background-size: cover; /* Cover the entire viewport */
+            background-position: center; /* Center the background image */
+            background-repeat: repeat;
+            color: white; /* Change text color to white */
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 7px;
+        }
+
+        .centered {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            width: 80%;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: white; /* Button background color */
+            color: black; /* Button text color */
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ccc; /* Button hover effect */
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: space-around;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .footer-nav li img {
+            width: 52px;
+            height: 52px;
+        }
+
+        /* Encircle each item with a white rectangular border */
+        .profile-item {
+            border: 2px solid white;
+            padding: 7px;
+            width: 90%;
+            margin: 10px 0;
+            text-align: center;
+            border-radius: 10px; /* Optional: add some rounded corners */
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.5);  /* Black background with 80% opacity */
+            width: 90%;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 5px;                /* 5px above the bottom of the screen */
+            border: 2px solid white;    /* Adds a white border */
+            border-radius: 30px;        /* Slightly rounded corners for blunt edges */
+            box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+            color: #ffffff;             /* Text color inside the footer */
+        }
+
+        #profile-display {
+            margin: 15px auto;
+            padding: 10px;
+            border: 0px solid #00ff00;
+            border-radius: 20px;
+            display: inline-block;
+            width: 80%;
+            text-align: center;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: borderGlow 2s infinite;
+            box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+       }
+
+    @keyframes borderGlow {
+        0% {
+            border-color: #00ff00;
+            box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+        }
+        50% {
+            border-color: #008000;
+            box-shadow: 0px 0px 25px rgba(0, 255, 0, 0.9);
+        }
+        100% {
+            border-color: #00ff00;
+            box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+        }
+        };
+        .task button {
+            margin-top: 1rem;
+            padding: 0.7rem 1.5rem;
+            width: 80%;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            box-shadow: 0px 6px 10px rgba(0, 255, 0, 0.5);
+            background-color: #28a745;
+            color: #fff;
+        }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="profile2.html" style="position: absolute; top: 5px; left: 20px;">
+            <img src="profile.png" alt="Profile" style="width: 33px; height: 33px; background-color: transparent;">
+        </a>
+        <h3>Profile Information</h3>
+    </header>
+
+    <section class="centered">
+        <h3>Profile Information ℹ️</h3>
+        <div id="info-container">
+            <div id="name-container">
+                <input type="text" id="nameInput" placeholder="Enter your name" />
+            </div>
+            <div id="wallet-container">
+                <input type="text" id="walletInput" placeholder="Enter your wallet address" />
+            </div>
+            <button onclick="saveProfile()">Save</button>
+        </div>
+        <div id="profile-display" style="display:none;">
+            <div class="profile-item">
+                <p>Username: <span id="display-name"></span></p>
+            </div>
+            <div class="profile-item">
+                <p>Wallet Address: <span id="display-wallet"></span></p>
+            </div>
+            <div class="profile-item">
+                <p>Balance: <span id="balance">0</span> hours</p>
+            </div>
+            <div class="profile-item">
+                <p>Level: <span id="level">Shadow</span></p> <!-- Added level display -->
+            </div>
+        </div>
+
+        <!-- View Whitepaper and Backup link -->
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="pp.html" style="color: white; font-size: 18px; text-decoration: none;">View Whitepaper</a>
+            <span style="margin-left: 20px;">
+                <a href="pw.html" style="color: white; font-size: 18px; text-decoration: none;">Backup</a>
+            </span>
+        </div>
+    </section>
+
+    <footer>
+        <nav>
+            <ul class="footer-nav">
+                <li><a href="index.html"><img src="home.png" alt="Home"></a></li>
+                <li><a href="Tasks.html"><img src="earn.png" alt="Tasks"></a></li>
+                <li><a href="Frens.html"><img src="frens.png" alt="Frens"></a></li>
+                <li><a href="Wallet.html"><img src="wallet.png" alt="Wallet"></a></li>
+            </ul>
+        </nav>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Function to determine user level based on balance
+        function getUserLevel(balance) {
+            if (balance <= 80) return "Shadow👤";
+            if (balance <= 160) return "Phantom🏅";
+            if (balance <= 300) return "Shroud☠️";
+            if (balance <= 430) return "Nightmarer🏆";
+            if (balance <= 600) return "Zombie🎖️";
+            if (balance <= 1100) return "Witch🧙‍♀️";
+            if (balance <= 1700) return "Whisperer🥉";
+            if (balance <= 3900) return "Ghost🥈";
+            if (balance <= 8000) return "Vampire🥇";
+            if (balance <= 12000) return "Night Legend🧝";
+            if (balance <= 20000) return "Dreamer💭";
+            return "DarkHours Lord👑"; // 20010 to 1,000,000+ hours
+        }
+
+        // Function to break wallet address if it exceeds 24 characters
+        function breakWalletAddress(wallet) {
+            if (wallet.length > 24) {
+                return wallet.match(/.{1,24}/g).join('<br>'); // Break into chunks of 24 characters
+            }
+            return wallet;
+        }
+
+        // Function to save profile information to Local Storage
+        function saveProfile() {
+            const name = document.getElementById("nameInput").value;
+            const wallet = document.getElementById("walletInput").value;
+            const balance = 0; // Set initial balance to 0, you can change this
+
+            // Save to Local Storage
+            localStorage.setItem("username", name);
+            localStorage.setItem("walletAddress", wallet);
+            localStorage.setItem("balance", balance);
+
+            // Update the display
+            document.getElementById("display-name").innerText = name;
+            document.getElementById("display-wallet").innerHTML = breakWalletAddress(wallet); // Use innerHTML to support line breaks
+            document.getElementById("balance").innerText = balance;
+
+            // Get and display user level based on balance
+            const level = getUserLevel(balance);
+            document.getElementById("level").innerText = level;
+
+            // Hide input fields and show profile display
+            document.getElementById("info-container").style.display = "none";
+            document.getElementById("profile-display").style.display = "block";
+        }
+
+        // On page load, check Local Storage and display if data exists
+        window.onload = function() {
+            const savedName = localStorage.getItem("username");
+            const savedWallet = localStorage.getItem("walletAddress");
+            const savedBalance = parseInt(localStorage.getItem("balance")) || 0;
+
+            if (savedName || savedWallet) {
+                document.getElementById("display-name").innerText = savedName || "Not set";
+                document.getElementById("display-wallet").innerHTML = breakWalletAddress(savedWallet || "Not set");
+                document.getElementById("balance").innerText = savedBalance;
+
+                // Get and display user level based on balance
+                const level = getUserLevel(savedBalance);
+                document.getElementById("level").innerText = level;
+
+                document.getElementById("info-container").style.display = "none";
+                document.getElementById("profile-display").style.display = "block";
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Style */
+        body {
+            background: url('dkbk.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 88vh;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Scroll Button Styling */
+        .scroll-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 15px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            position: absolute;
+            top: 20px;
+            z-index: 10;
+        }
+        .scroll-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Container Styling */
+        .container {
+            width: 80%;
+            max-width: 800px;
+            height: 70vh;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+            border-radius: 15px;
+            overflow-y: auto; /* Scrollable content */
+            color: #fff;
+            line-height: 1.6;
+            position: relative;
+        }
+
+                 .footer-nav {
+            display: flex;
+            justify-content: space-around;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .footer-nav li img {
+            width: 52px;
+            height: 52px;
+        }
+
+        /* Encircle each item with a white rectangular border */
+        .profile-item {
+            border: 2px solid white;
+            padding: 7px;
+            width: 90%;
+            margin: 10px 0;
+            text-align: center;
+            border-radius: 10px; /* Optional: add some rounded corners */
+        }
+        
+                footer {
+            background-color: rgba(0, 0, 0, 0.5);  /* Black background with 80% opacity */
+            width: 90%;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 5px;                /* 5px above the bottom of the screen */
+            border: 2px solid white;    /* Adds a white border */
+            border-radius: 30px;        /* Slightly rounded corners for blunt edges */
+            box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+            color: #ffffff;             /* Text color inside the footer */
+                    }
+        
+
+    </style>
+</head>
+<body>
+    <!-- Scroll Button -->
+    <button class="scroll-button" id="scrollButton">Scroll Automatically</button>
+
+    <!-- White Paper Content Container -->
+    <div class="container" id="whitePaperContent">
+        <h2>Dark Hours Whitepaper</h2>
+        <h3>Abstract:</h3>
+        <p>Dark Hours is a mining platform designed to revolutionize the mining industry by providing a secure, decentralized, and accessible solution. This whitepaper outlines the vision, problem statement, solutions, technology, tokenomics, and roadmap for Dark Hours, aiming to empower individuals globally to mine cryptocurrencies efficiently and securely.</p>
+
+        <h3>Project Vision and Mission:</h3>
+        <h4>Mission Statement:</h4>
+        <p>Dark Hours endeavors to transform the mining industry by providing a secure, decentralized, and accessible platform for global users.</p>
+
+        <h4>Vision:</h4>
+        <p>Empower individuals to mine cryptocurrencies efficiently, securely, and sustainably, fostering a supportive community.</p>
+
+        <h4>Inspiration:</h4>
+        <p>The need for a user-friendly, transparent, and community-driven mining platform sparked the creation of Dark Hours.</p>
+
+        <h3>Problem Statement:</h3>
+        <p>The current mining ecosystem faces significant challenges:</p>
+        <ul>
+            <li>Exorbitant entry costs</li>
+            <li>Centralization</li>
+            <li>Limited user-friendliness</li>
+            <li>Scam projects</li>
+            <li>Security concerns</li>
+        </ul>
+        <p>Dark Hours addresses these challenges by offering:</p>
+        <ul>
+            <li>Lower entry barriers</li>
+            <li>Decentralized infrastructure</li>
+            <li>Free mining with no additional requirements</li>
+            <li>Intuitive interface</li>
+            <li>Advanced security measures</li>
+        </ul>
+
+        <h3>Our Solution:</h3>
+        <p>Dark Hours offers unique features to overcome these challenges:</p>
+        <ul>
+            <li>Decentralized mining pools</li>
+            <li>Real-time monitoring and analytics</li>
+            <li>Community-driven support</li>
+        </ul>
+        <p>Benefits include:</p>
+        <ul>
+            <li>Enhanced accessibility</li>
+            <li>Improved profitability</li>
+            <li>Strengthened security</li>
+            <li>Community engagement</li>
+        </ul>
+
+        <h3>Technology and Security:</h3>
+        <p>Dark Hours focuses on securing user assets through decentralized data storage. Users are responsible for securing their assets on devices like Telegram or phones. However, it is important to note that losing access to these devices (Phone or Telegram app) may result in the loss of assets.</p>
+        <p>Before losing access to the above-listed,Users are advised to Backup their account to prevent irreversible loss in case of unforeseen circumstances</p>
+        
+        <h3>Revenue Model:</h3>
+        <p>Dark Hours generates revenue through multiple streams:</p>
+        <ul>
+            <li>Trading</li>
+            <li>Social media advertising</li>
+            <li>Community promotions</li>
+            <li>Partnerships</li>
+        </ul>
+
+        <h3>Tokenomics:</h3>
+        <p>Token Name: $Hours</p>
+        <p>Token Distribution:</p>
+        <ul>
+            <li>Community: 60%</li>
+            <li>Team: 15%</li>
+            <li>Investors: 10%</li>
+            <li>Liquidity: 8%</li>
+            <li>Partners: 6%</li>
+            <li>App Maintenance: 1%</li>
+        </ul>
+
+        <h3>User Engagement and Community:</h3>
+        <p>Dark Hours is committed to building a strong community across various platforms:</p>
+        <ul>
+            <li>Telegram, Discord, Twitter, WhatsApp, YouTube, TikTok, Instagram, Facebook</li>
+        </ul>
+        <p>Engagement Strategies:</p>
+        <ul>
+            <li>Regular updates</li>
+            <li>AMAs (Ask Me Anything)</li>
+            <li>Community contests</li>
+            <li>Support channels</li>
+        </ul>
+
+        <h3>Roadmap and Future Plans:</h3>
+        <p>Dark Hours has set clear milestones for the future:</p>
+        <ul>
+            <li>Token listing: Community will decide</li>
+            <li>Indefinite mining season:</li>
+            <li>Mining will continue even after token listing, ensuring sustainability.</li>
+            <li>Bi-annual token distribution to miners (Swap for USDT, before listing date ).</li>
+            <li>Miners will continue to receive there mined token bi-annually, even after listing.</li>
+            <li>Refferal bonuses can be withdrawn every 3 months - Base on official announcement.</li>
+        </ul>
+
+        <h3>Legal and Compliance:</h3>
+        <p>Dark Hours is dedicated to complying with regulatory standards:</p>
+        <ul>
+            <li>KYC verification is required for selected features</li>
+            <li>Compliance with AML (Anti-Money Laundering), KYC (Know Your Customer), and GDPR (General Data Protection Regulation) guidelines</li>
+        </ul>
+
+        <h3>Conclusion:</h3>
+        <p>Dark Hours is designed to democratize access to cryptocurrency mining, reducing barriers and enhancing transparency. By fostering a decentralized and user-centric platform, we aim to build a sustainable, profitable mining community that benefits everyone involved. Join us on our journey to redefine mining for the next generation.</p>
+    </div>
+
+    <footer>
+        <nav>
+            <ul class="footer-nav">
+                <li><a href="index.html"><img src="home.png" alt="Home"></a></li>
+                <li><a href="Tasks.html"><img src="earn.png" alt="Tasks"></a></li>
+                <li><a href="Frens.html"><img src="frens.png" alt="Frens"></a></li>
+                <li><a href="Wallet.html"><img src="wallet.png" alt="Wallet"></a></li>
+            </ul>
+        </nav>
+</footer>
+
+    <!-- JavaScript for Auto Scrolling -->
+    <script>
+        const scrollButton = document.getElementById('scrollButton');
+        const content = document.getElementById('whitePaperContent');
+        let scrollInterval;
+        let isScrolling = false;
+        let isAtEnd = false;
+
+        // Function to start scrolling down
+        function startAutoScrollDown() {
+            scrollInterval = setInterval(() => {
+                content.scrollTop += 1; // Scroll down by 1px
+                if (content.scrollTop + content.clientHeight >= content.scrollHeight) {
+                    isAtEnd = true;
+                    clearInterval(scrollInterval);
+                    scrollButton.textContent = 'Scroll Up';
+                }
+            }, 30); // Adjust speed by changing the interval
+        }
+
+        // Function to start scrolling up
+        function startAutoScrollUp() {
+            scrollInterval = setInterval(() => {
+                content.scrollTop -= 1; // Scroll up by 1px
+                if (content.scrollTop <= 0) {
+                    clearInterval(scrollInterval);
+                    scrollButton.textContent = 'Scroll Automatically';
+                    isAtEnd = false;
+                }
+            }, 30); // Adjust speed by changing the interval
+        }
+
+        // Function to stop scrolling
+        function stopAutoScroll() {
+            clearInterval(scrollInterval);
+        }
+
+        // Button click event listener
+        scrollButton.addEventListener('click', () => {
+            if (isScrolling) {
+                stopAutoScroll();
+                scrollButton.textContent = isAtEnd ? 'Scroll Up' : 'Scroll Automatically';
+            } else {
+                if (isAtEnd) {
+                    startAutoScrollUp();
+                } else {
+                    startAutoScrollDown();
+                }
+                scrollButton.textContent = isAtEnd ? 'Scroll Up' : 'Stop Scrolling';
+            }
+            isScrolling = !isScrolling;
+        });
+    </script>
+</body>
+</html>

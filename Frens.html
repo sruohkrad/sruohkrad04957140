@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invite a Friend - Dark Hours</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('dkbk.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: repeat;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            padding: 10px;
+        }
+        .bordered-text {
+            position: relative;
+            margin: 15px auto;
+            padding: 20px;
+            width: 80%;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: left;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .bordered-text::before,
+        .bordered-text::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            border: 5px solid red;
+            animation: borderFlow 4s linear infinite;
+        }
+
+        .bordered-text::after {
+            border: 5px solid green;
+            animation-delay: 2s;
+        }
+
+        @keyframes borderFlow {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .bordered-text p {
+            margin: 5px 0;
+            font-size: 1.0em;
+        }
+
+        .bordered-text b {
+            color: #ffd700;
+        }
+
+        #inviteLinkContainer {
+            margin-top: 50px;
+            padding: 15px;
+            border: 0.8px solid #fff;
+            border-radius: 20px;
+            display: inline-block;
+            width: 100%; /* Ensures the container takes up full width of the parent */
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 100%; /* Ensures the input takes up full width of the container */
+            max-width: 500px; /* You can adjust the max width if needed */
+            border: 0.8px solid #fff;
+            background-color: #000;
+            color: #fff;
+            border-radius: 15px; /* Optional: add rounded corners */
+            font-size: 1.1em; /* Makes the text more readable */
+            box-sizing: border-box; /* Ensures padding is accounted for within the width */
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #ccc;
+        }
+
+        .inviteLink-display {
+            font-size: 18px;
+            color: #fff;
+            background-color: #000;
+            border: 0.8px solid #fff;
+            border-radius: 20px;
+            padding: 15px;
+            max-width: 500px; /* Ensures the display is not too wide */
+            margin: 20px auto;
+            word-wrap: break-word; /* Ensures long links break and wrap within the box */
+         }
+        
+    </style>
+    <script>
+        function saveLink() {
+            const inviteLink = document.getElementById('inviteLink').value;
+            if (inviteLink === '') {
+                showMessage('Please paste your invite link.'); // Custom error message
+                return;
+            }
+            localStorage.setItem('inviteLink', inviteLink);
+            document.getElementById('saveButton').style.display = 'none'; // Hide the save button
+            document.getElementById('copyButton').style.display = 'inline'; // Show the copy button
+            showMessage('Good Job, You Linked Your Referral Link'); // Show the message for 3 seconds
+        }
+
+        function copyLink() {
+            const inviteLink = document.getElementById('inviteLink');
+            inviteLink.select();
+            document.execCommand('copy');
+            showMessage('Referral Link Copied'); // Custom copy message
+        }
+
+        function showMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messageElement.style.position = 'absolute';
+            messageElement.style.top = '20px';
+            messageElement.style.left = '50%';
+            messageElement.style.transform = 'translateX(-50%)';
+            messageElement.style.backgroundColor = 'black'; // Black background
+            messageElement.style.color = 'white'; // White font
+            messageElement.style.padding = '10px';
+            messageElement.style.border = '1px solid #000';
+            messageElement.style.zIndex = '1000';
+            messageElement.style.borderRadius = '5px'; // Optional: rounded corners
+
+            document.body.appendChild(messageElement);
+            setTimeout(() => {
+                document.body.removeChild(messageElement);
+            }, 3000); // Remove the message after 3 seconds
+        }
+
+        window.onload = function() {
+            // Check if invite link is already saved
+            const savedLink = localStorage.getItem('inviteLink');
+            if (savedLink) {
+                document.getElementById('inviteLink').value = savedLink;
+                document.getElementById('saveButton').style.display = 'none';
+                document.getElementById('copyButton').style.display = 'inline';
+            } else {
+                document.getElementById('copyButton').style.display = 'none'; // Hide copy button initially
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h3>Invite friends and earn more Hours</h3>
+    </header>
+    <section>
+        <div class="bordered-text">
+            <p>Get your referral link in the Telegram bot.</p>
+            <p>Remember, your referral bonus will not appear here but rather in the bot.</p>
+            <p>Referral bonuses withdrawals are permitted during the specified withdrawal period.</p>
+            <p>Refer friends, earn more bonus.</p>
+        </div>
+        <p>Go to the bot and copy your invite link:</p>
+        <input type="text" id="inviteLink" placeholder="Paste your given invite link here" />
+        <button id="saveButton" onclick="saveLink()">Save</button>
+        <button id="copyButton" onclick="copyLink()">Copy</button>
+    </section>
+    <footer>
+        <nav>
+            <ul class="footer-nav">
+                <li><a href="index.html"><img src="home.png" alt="Home"></a></li>
+                <li><a href="Tasks.html"><img src="earn.png" alt="Tasks"></a></li>
+                <li><a href="Frens.html"><img src="frens.png" alt="Frens"></a></li>
+                <li><a href="Wallet.html"><img src="wallet.png" alt="Wallet"></a></li>
+            </ul>
+        </nav>
+    </footer>
+</body>
+</html>

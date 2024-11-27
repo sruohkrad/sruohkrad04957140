@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backup - Dark Hours</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('dkbk.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: repeat;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            padding: 15px;
+            color: white;
+        }
+        .content {
+            text-align: center;
+            margin-top: 50px;
+            color: white;
+        }
+        .backup-info {
+            position: relative;
+            margin: 15px auto;
+            padding: 20px;
+            width: 80%;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            text-align: left;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .backup-info::before,
+        .backup-info::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            border: 5px solid red;
+            animation: borderFlow 4s linear infinite;
+        }
+
+        .backup-info::after {
+            border: 5px solid green;
+            animation-delay: 2s;
+        }
+
+        @keyframes borderFlow {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .backup-info p {
+            margin: 5px 0;
+            font-size: 1.0em;
+        }
+
+        .backup-info b {
+            color: #ffd700;
+        }
+
+        input {
+            padding: 8px;
+            margin: 10px;
+            font-size: 1rem;
+            width: 80%;
+            max-width: 300px;
+            border-radius: 10px;
+        }
+        button {
+            margin-top: 20px;
+            background-color: #fff;
+            color: #000;
+            padding: 9px 18px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 8px; /* Blunt edges for button */
+            border: none;
+            width: 200px; /* Set a fixed width */
+        }
+        button:hover {
+            background-color: #ddd;
+        }
+        .back-button {
+            margin-top: 10px;
+        }
+        .message {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: black;
+            color: white;
+            padding: 10px;
+            border: 1px solid red; /* Red border for error message */
+            z-index: 1000;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Backup - Dark Hours</h1>
+    </header>
+
+    <div class="backup-info">
+        <h3>Important Backup Information</h3>
+        <p>1. This page is for users who have a backup.</p>
+        <p>2. Please make sure you have your backup information ready.</p>
+        <p>3. Contact support bot for login approval.</p>
+        <p>4. Make sure to store your backup safely.</p>
+    </div>
+    
+    <!-- User Input Form -->
+    <div class="content">
+        <input type="text" id="username" placeholder="Enter your existing username" />
+        <input type="text" id="walletAddress" placeholder="Enter your existing wallet address" />
+        
+        <button onclick="login()">Login</button>
+        
+        <button class="back-button" onclick="goBack()">Back to Sign Up</button>
+    </div>
+
+    <script>
+        const users = [
+            { username: "@amk1", walletAddress: "xxx1", balance: 1001 },
+            { username: "@amk2", walletAddress: "xxx2", balance: 1002 },
+            { username: "@amk3", walletAddress: "xxx3", balance: 1003 },
+            { username: "@amk4", walletAddress: "xxx4", balance: 1004 },
+            { username: "@amk5", walletAddress: "xxx5", balance: 1005 },
+            { username: "@amk6", walletAddress: "xxx6", balance: 1006 },
+            { username: "@amk7", walletAddress: "xxx7", balance: 1007 },
+            { username: "@amk8", walletAddress: "xxx8", balance: 1008 },
+            { username: "@amk9", walletAddress: "xxx9", balance: 1009 },
+            { username: "@amk10", walletAddress: "xxx10", balance: 1010 },
+            { username: "@amk11", walletAddress: "xxx11", balance: 1001 },
+            { username: "@amk12", walletAddress: "xxx12", balance: 1002 },
+            { username: "@amk13", walletAddress: "xxx13", balance: 1003 },
+            { username: "@amk14", walletAddress: "xxx14", balance: 1004 },
+            { username: "@amk15", walletAddress: "xxx15", balance: 1005 },
+            { username: "@amk16", walletAddress: "xxx16", balance: 1006 },
+            { username: "@amk17", walletAddress: "xxx17", balance: 1007 },
+            { username: "@amk18", walletAddress: "xxx18", balance: 1008 },
+            { username: "@amk19", walletAddress: "xxx19", balance: 1009 },
+            { username: "@amk20", walletAddress: "xxx20", balance: 1010 },
+            { username: "@amk21", walletAddress: "xxx21", balance: 1001 },
+            { username: "@amk22", walletAddress: "xxx22", balance: 1002 },
+            { username: "@amk23", walletAddress: "xxx23", balance: 1003 },
+            { username: "@amk24", walletAddress: "xxx24", balance: 1004 },
+            { username: "@amk25", walletAddress: "xxx25", balance: 1005 },
+            { username: "@amk26", walletAddress: "xxx26", balance: 1006 },
+            { username: "@amk27", walletAddress: "xxx27", balance: 1007 },
+            { username: "@amk28", walletAddress: "xxx28", balance: 1008 },
+            { username: "@amk29", walletAddress: "xxx29", balance: 1009 },
+            { username: "@amk30", walletAddress: "xxx30", balance: 1010 },
+            { username: "@amk31", walletAddress: "xxx31", balance: 1001 },
+            { username: "@amk32", walletAddress: "xxx32", balance: 1002 },
+            { username: "@amk33", walletAddress: "xxx33", balance: 1003 },
+            { username: "@amk34", walletAddress: "xxx34", balance: 1004 },
+            { username: "@amk35", walletAddress: "xxx35", balance: 1005 },
+            { username: "@amk36", walletAddress: "xxx36", balance: 1006 },
+            { username: "@amk37", walletAddress: "xxx37", balance: 1007 },
+            { username: "@amk38", walletAddress: "xxx38", balance: 1008 },
+            { username: "@amk39", walletAddress: "xxx39", balance: 1009 },
+            { username: "@amk40", walletAddress: "xxx40", balance: 1010 },
+            { username: "@amk41", walletAddress: "xxx41", balance: 1001 },
+            { username: "@amk42", walletAddress: "xxx42", balance: 1002 },
+            { username: "@amk43", walletAddress: "xxx43", balance: 1003 },
+            { username: "@amk44", walletAddress: "xxx44", balance: 1004 },
+            { username: "@amk45", walletAddress: "xxx45", balance: 1005 },
+            { username: "@amk46", walletAddress: "xxx46", balance: 1006 },
+            { username: "@amk47", walletAddress: "xxx47", balance: 1007 },
+            { username: "@amk48", walletAddress: "xxx48", balance: 1008 },
+            { username: "@amk49", walletAddress: "xxx49", balance: 1009 },
+            { username: "@amk50", walletAddress: "xxx50", balance: 1010 },
+        ];
+
+        function login() {
+            const username = document.getElementById('username').value.trim();
+            const walletAddress = document.getElementById('walletAddress').value.trim();
+
+            // Find the user in the array
+            const user = users.find(u => u.username === username && u.walletAddress === walletAddress);
+
+            if (user) {
+                // Save the user details to localStorage
+                localStorage.setItem('username', user.username);
+                localStorage.setItem('walletAddress', user.walletAddress);
+                localStorage.setItem('balance', user.balance);
+
+                // Show success message
+                showMessage(`Login successful!`);
+                
+                // Redirect to index.html
+                window.location.href = 'index.html';
+            } else {
+                // Show error message if no match is found
+                showMessage("Ohhh!,You forgot to request for login approval Please chat @HOURS_BKP_BOT.");
+            }
+        }
+
+        function showMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messageElement.className = 'message';
+
+            document.body.appendChild(messageElement);
+            setTimeout(() => {
+                document.body.removeChild(messageElement);
+            }, 3000); // Remove the message after 3 seconds
+        }
+
+        function goBack() {
+            window.location.href = 'login.html'; // Navigates back to login page
+        }
+    </script>
+</body>
+</html>
