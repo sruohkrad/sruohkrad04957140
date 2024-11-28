@@ -28,7 +28,7 @@
         border: 0px solid #00ff00;
         border-radius: 20px;
         display: inline-block;
-        width: auto;
+        width: 77%;
         background-color: rgba(0, 0, 0, 0.7);
         animation: borderGlow 4s infinite;
         box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
@@ -87,7 +87,7 @@
         border: 0.5px solid #00ff00;
         border-radius: 20px;
         display: inline-block;
-        width: auto;
+        width: 77%;
         background-color: rgba(0, 0, 0, 0.7);
         animation: borderGlow 2s infinite;
         box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
@@ -109,7 +109,8 @@
     }
         .task-title {
             border: 0.5px solid #FFFF00;
-            padding: 3px;
+            color: #ffdd00;
+            padding: 0px;
             border-radius: 20px;
             margin-bottom: 20px;
         }
@@ -170,7 +171,7 @@
         /* New Container for Send and Receive Hour */
 #sendReceiveContainer {
     margin-top: 20px;
-    padding: 20px;
+    padding: 0px;
     border-radius: 20px;
     border: 0.5px solid #ffdd00; /* Yellow border */
     background-color: rgba(0, 0, 0, 0.7);
@@ -178,7 +179,7 @@
     animation: borderGlow 2s infinite;
     box-shadow: 0px 0px 15px rgba(255, 255, 0, 0.7); /* Yellow glow */
     text-align: center;
-    width: auto;
+    width: 81%;
 }
 
 /* Text Styling */
@@ -191,8 +192,8 @@
 
 /* Circular Images Styling */
 .send-receive-img {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     margin: 0 10px;
     cursor: pointer;
@@ -224,7 +225,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(255, 0, 0, 0.2); /* Semi-transparent red background */
+    background: rgba(2, 0, 0, 0.5); /* Semi-transparent red background */
     border: 1px solid red; /* Thin red border around the text */
     border-radius: 15px;        
     color: green;
@@ -234,7 +235,7 @@
     z-index: 9999; /* Keeps the message on top */
     display: none; /* Hidden by default */
 }
-        
+
     </style>
 </head>
 <body>
@@ -247,7 +248,7 @@
     <!-- New Task Section -->
     <section class="task-container">
         <div class="task-title">
-            <h2>Daily Wallet Activities...</h2>
+            <h2>Daily wallet activity</h2>
         </div>
         <p>DARK HOURS SET UP GUIDE</p>
         <button id="startButton" onclick="startTask()">Start</button>
