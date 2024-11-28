@@ -80,7 +80,7 @@
             margin: 20px auto;
             word-wrap: break-word;
         }
-        
+
     .task-container {
         margin-top: 50px;
         padding: 10px;
@@ -167,6 +167,74 @@
     width: 52px; /* Adjust the size of the images */
     height: 52px; /* Adjust the size of the images */
 }
+        /* New Container for Send and Receive Hour */
+#sendReceiveContainer {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 20px;
+    border: 0.5px solid #ffdd00; /* Yellow border */
+    background-color: rgba(0, 0, 0, 0.7);
+    display: inline-block;
+    animation: borderGlow 2s infinite;
+    box-shadow: 0px 0px 15px rgba(255, 255, 0, 0.7); /* Yellow glow */
+    text-align: center;
+    width: auto;
+}
+
+/* Text Styling */
+#sendReceiveText {
+    color: #ffdd00; /* Yellow text */
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Circular Images Styling */
+.send-receive-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 0px 0px 10px rgba(255, 255, 0, 0.7); /* Yellow glow around images */
+}
+
+.send-receive-img:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+}
+
+/* Same Animation Reused */
+@keyframes borderGlow {
+    0% {
+        border-color: #ffdd00; /* Start with yellow border */
+        box-shadow: 0px 0px 15px rgba(255, 255, 0, 0.7);
+    }
+    50% {
+        border-color: #ffaa00; /* Slightly darker yellow */
+        box-shadow: 0px 0px 25px rgba(255, 170, 0, 0.9);
+    }
+    100% {
+        border-color: #ffdd00; /* Back to yellow */
+        box-shadow: 0px 0px 15px rgba(255, 255, 0, 0.7);
+    }
+}
+        #customMessage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 0, 0, 0.2); /* Semi-transparent red background */
+    border: 1px solid red; /* Thin red border around the text */
+    border-radius: 15px;        
+    color: green;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 6px; /* Adds some space around the text */
+    z-index: 9999; /* Keeps the message on top */
+    display: none; /* Hidden by default */
+}
+        
     </style>
 </head>
 <body>
@@ -188,7 +256,17 @@
             <button id="verifyButton" onclick="verifyTask()">Verify</button>
         </div>
     </section>
-
+    <!-- Send and Receive Hour Container -->
+<div id="sendReceiveContainer">
+    <div id="sendReceiveText">Send and Receive Hour</div>
+    <div>
+        <!-- Circular Image for Send -->
+        <img src="S1.png" alt="Send Hour" class="send-receive-img" onclick="sendHour()">
+        <!-- Circular Image for Receive -->
+        <img src="R1.png" alt="Receive Hour" class="send-receive-img" onclick="receiveHour()">
+    </div>
+</div>
+    <div id="customMessage" class="hidden"></div>
     <footer>
         <nav>
             <ul class="footer-nav">
@@ -213,7 +291,7 @@
             if (savedWalletAddress) {
                 displaySavedWalletAddress(savedWalletAddress);
             }
-            
+
             const savedTaskData = JSON.parse(localStorage.getItem('taskData'));
             const taskStatus = localStorage.getItem('taskCompleted');
 
@@ -228,7 +306,7 @@
                 markTaskCompleted();
             }
         });
-      
+
         // Function to save wallet address to localStorage
         function saveWalletAddress() {
             const walletAddressInput = document.getElementById('walletAddress').value;
@@ -325,6 +403,37 @@
                 document.body.removeChild(messageElement);
             }, 7000); // Message will disappear after 7 seconds
         }
+// Function to display the message
+function showMessage(message) {
+    const messageBox = document.getElementById("customMessage");
+    messageBox.textContent = message;
+    messageBox.style.display = "inline"; // Show the message
+
+    // Hide the message after 4 seconds
+    setTimeout(() => {
+        messageBox.style.display = "none";
+    }, 4000);
+}
+
+// Function to handle Send Hour
+function sendHour() {
+    showMessage("Send and Receive is only enabled after official announcement");
+}
+
+// Function to handle Receive Hour
+function receiveHour() {
+    showMessage("Send and Receive is only enabled after official announcement");
+}
+
+// Initialize balance on page load (optional)
+window.onload = function () {
+    let balance = localStorage.getItem("balance");
+    if (!balance) {
+        localStorage.setItem("balance", "0"); // Initialize balance if not present
+    }
+};
+
+
     </script>
 </body>
 </html>
