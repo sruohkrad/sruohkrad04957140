@@ -282,7 +282,7 @@
     <script>
         const currentTaskData = {
             name: "Dark Hours Set Up Guide",
-            id: "task6",
+            id: "task7",
             link: "https://youtube.com/shorts/I-2xDrtOVcc?si=saDdda9E7ggLTLGh"
         };
 
@@ -355,7 +355,7 @@
         function verifyTask() {
             const code = document.getElementById('verificationCode').value;
             if (code === 'DARKHOURSSETUP') {
-                displayMessage("Wallet activity is successfully recorded!");
+                displayMessage("Wallet activity is successfully recorded!, reward added.");
                 markTaskCompleted();
                 addHoursToBalance(15); // Add 15 hours to balance in index.html
             } else {
@@ -381,7 +381,7 @@
             document.getElementById('startButton').style.display = 'inline';
             document.getElementById('taskContent').style.display = 'none';
             document.getElementById('verificationCode').value = '';
-            displayMessage("New activity!! Please start it now.");
+            displayMessage("New activity added,do it now.");
         }
 
         // Custom message display function
@@ -392,10 +392,11 @@
             messageElement.style.top = '50%';
             messageElement.style.left = '50%';
             messageElement.style.transform = 'translate(-50%, -50%)';
-            messageElement.style.backgroundColor = '#333';
+            messageElement.style.backgroundColor = 'rgba(2, 0, 0, 0.8)';
             messageElement.style.color = '#fff';
-            messageElement.style.padding = '10px 30px';
-            messageElement.style.borderRadius = '5px';
+            messageElement.style.padding = '10px 20px';
+            messageElement.style.border = '1px solid red';
+            messageElement.style.borderRadius = '15px';
             messageElement.style.zIndex = '1000';
             messageElement.style.boxShadow = '0 2px 10px rgba(0,0,0,0.5)';
             document.body.appendChild(messageElement);
