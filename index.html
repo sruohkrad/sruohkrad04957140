@@ -34,8 +34,8 @@
             width: 60px;
             height: 60px;
             background-color: transparent;
-            animation: rotateBounce 4s ease-in-out infinite;
-            animation-delay: 0.5s;
+            animation: rotateBounce 10s ease-in-out infinite;
+            animation-delay: 4s;
         }
 
         @keyframes rotateBounce {
@@ -59,6 +59,29 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* Circular image style */
+        .circular-image {
+            position: absolute;
+            top: 5px;
+            right: 20px;
+            width: 35px;
+            height: 35px;
+            border: 1px solid #fff;
+            border-radius: 20%;
+            animation: glow 2s infinite alternate;
+        }
+
+        /* Glow animation */
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 10px red;
+            }
+
+            100% {
+                box-shadow: 0 0 20px green;
+            }
+        }
     </style>
 </head>
 
@@ -73,6 +96,9 @@
         <a href="Christmas.html" class="christmas-button">
             <img id="christmasImage" src="Christmas.png" alt="Christmas">
         </a>
+
+        <!-- Circular image -->
+        <img id="dynamicImage" src="1a.png" alt="Balance Level" class="circular-image">
 
         <h3 style="margin-left: 50px;">H</h3>
     </header>
