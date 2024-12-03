@@ -31,7 +31,7 @@ function updateBalance() {
 function updateCountdown() {
     const countdownElement = document.getElementById('countdown');
     const claimButton = document.getElementById('claimButton');
-    
+
     if (lastClaim) {
         const now = new Date();
         const elapsed = now - lastClaim;
@@ -201,3 +201,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+        const balanceElement = document.getElementById("balance");
+        const dynamicImage = document.getElementById("dynamicImage");
+
+        function updateImageBasedOnBalance() {
+            const balance = parseInt(balanceElement.textContent, 10);
+            let imageSrc = "1a.png";
+
+            if (balance <= 200) imageSrc = "1a.png";
+            else if (balance <= 250) imageSrc = "1b.png";
+            else if (balance <= 400) imageSrc = "1c.png";
+            else if (balance <= 1000) imageSrc = "1d.png";
+            else if (balance <= 1400) imageSrc = "1e.png";
+            else if (balance <= 1800) imageSrc = "1f.png";
+            else if (balance <= 2500) imageSrc = "1g.png";
+            else if (balance <= 4000) imageSrc = "1h.png";
+            else if (balance <= 8000) imageSrc = "1i.png";
+            else if (balance <= 12000) imageSrc = "1k.png";
+            else imageSrc = "1j.png";
+
+            dynamicImage.src = imageSrc;
+        }
