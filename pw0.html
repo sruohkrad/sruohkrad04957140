@@ -192,7 +192,7 @@
 
       if (!savedPassword) {
         localStorage.setItem("password", passwordInput.value);
-        displayMessage('success', "Password set successfully, Tap enter!!");
+        displayMessage('success', "Successful!");
         return;
       }
 
@@ -256,7 +256,7 @@
 
     window.onload = function () {
       if (!localStorage.getItem("password")) {
-        displayMessage('error', "Please set a password.");
+        displayMessage('error', "Set your password.");
       }
     };
   </script>
