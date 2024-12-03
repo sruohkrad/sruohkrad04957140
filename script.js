@@ -9,6 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
             headerElement.textContent = `${username}`;
         }
     }
+
+    // Initialize the balance and update image
+    updateBalance();
+    updateImageBasedOnBalance();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
 });
 
 // Existing balance and last claim
@@ -80,6 +86,7 @@ function claimHours() {
         localStorage.setItem('balance', balance);
 
         updateCountdown();
+        updateImageBasedOnBalance();  // Update image based on new balance
     }
 }
 
@@ -169,43 +176,16 @@ function startTask(taskId, url) {
             taskButton.disabled = true;
             taskButton.textContent = "Completed";
         }
+
+        updateImageBasedOnBalance();  // Update image after task completion
     }, 30000); // 30 seconds delay
 }
 
-// Initial setup on page load
-document.addEventListener('DOMContentLoaded', () => {
-    updateBalance();
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-
-    // Disable completed tasks and update text
-    const taskList = document.getElementById('taskList');
-    for (const taskId in taskRewards) {
-        if (taskRewards[taskId]) {
-            const button = document.querySelector(`button[onclick*="startTask('${taskId}',"]`);
-            const link = document.querySelector(`a[href*="startTask('${taskId}',"]`);
-            if (button) {
-                button.disabled = true;
-                button.textContent = "Completed";
-                if (taskList) {
-                    const taskItem = button.parentNode;
-                    taskList.appendChild(taskItem); // Ensure completed tasks are at the bottom
-                }
-            }
-            if (link) {
-                const completionText = document.createElement('span');
-                completionText.textContent = "You have completed this task.";
-                link.parentNode.appendChild(completionText);
-                link.remove();
-            }
-        }
-    }
-});
-
-const balanceElement = document.getElementById("balance");
-const dynamicImage = document.getElementById("dynamicImage");
-
+// Function to update image based on balance
 function updateImageBasedOnBalance() {
+    const balanceElement = document.getElementById("balance");
+    const dynamicImage = document.getElementById("dynamicImage");
+
     const balance = parseInt(balanceElement.textContent, 10);
     let imageSrc = "1a.png";
 
