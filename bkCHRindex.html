@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Hello</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('dkbk.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: repeat;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Profile button style */
+        .profile-button {
+            position: absolute;
+            top: 5px;
+            left: 20px;
+        }
+
+        /* Christmas button style with animation */
+        .christmas-button {
+            position: absolute;
+            top: 150px;
+            left: 20px;
+        }
+
+        .christmas-button img {
+            width: 60px;
+            height: 60px;
+            background-color: transparent;
+            animation: rotateBounce 4s ease-in-out infinite;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes rotateBounce {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(90deg);
+            }
+
+            50% {
+                transform: rotate(180deg);
+            }
+
+            75% {
+                transform: rotate(270deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header style="position: relative;">
+        <!-- Profile button -->
+        <a href="profile2.html" class="profile-button">
+            <img src="profile.png" alt="Profile" style="width: 33px; height: 33px; background-color: transparent;">
+        </a>
+
+        <!-- Christmas button with redirect -->
+        <a href="Christmas.html" class="christmas-button">
+            <img id="christmasImage" src="Christmas.png" alt="Christmas">
+        </a>
+
+        <h3 style="margin-left: 50px;">H</h3>
+    </header>
+
+    <section class="centered">
+        <h3>
+            <p class="bordered-text">Your Hours: <span id="balance">0</span> hours</p>
+        </h3>
+    </section>
+
+    <section class="centered">
+        <!-- Replaced the button with an image -->
+        <img id="claimButton" src="hours.png" alt="Claim Hours" onclick="claimHours()">
+        <p id="countdown"></p>
+    </section>
+
+    <footer>
+        <nav>
+            <ul class="footer-nav">
+                <li><a href="index.html"><img src="home.png" alt="Home"></a></li>
+                <li><a href="Tasks.html"><img src="earn.png" alt="Tasks"></a></li>
+                <li><a href="Frens.html"><img src="frens.png" alt="Frens"></a></li>
+                <li><a href="Wallet.html"><img src="wallet.png" alt="Wallet"></a></li>
+            </ul>
+        </nav>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
