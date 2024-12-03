@@ -137,7 +137,19 @@
             <img src="profile.png" alt="Profile" style="width: 33px; height: 33px; background-color: transparent;">
         </a>
         <h3>Profile Information</h3>
+        <a id="logout-link" href="#" style="position: absolute; top: 5px; right: 20px;">
+            <img src="logout.png" alt="Logout" style="width: 33px; border:1px; height: 33px; background-color: transparent;">
+        </a>
     </header>
+
+    <!-- Confirmation Dialog -->
+    <div id="logout-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; max-width: 400px; background-color: rgba(0, 0, 0, 0.9); color: white; padding: 20px; border-radius: 10px; text-align: left; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);">
+        <p>Are you sure you want to log out?</p> 
+        <p style="color: red;"">If you log out you will lose all your mined tokens.</p>
+        <p style="color: green;">Make sure you back up your account before logging out.</p>
+        <button id="cancel-btn" style="margin: 10px; padding: 6px 12px; border: none; border-radius: 12px; background-color: green; color: white; cursor: pointer;">Cancel</button>
+        <button id="confirm-logout-btn" style="margin: 10px; padding: 6px 12px; border: none; border-radius: 12px; background-color: red; color: white; cursor: pointer;">Yes,log out</button>
+    </div>
 
     <section class="centered">
         <h3>Profile Information ℹ️</h3>
@@ -255,6 +267,27 @@
                 document.getElementById("profile-display").style.display = "block";
             }
         }
+
+        // Logout functionality
+        document.getElementById("logout-link").addEventListener("click", function () {
+            // Show the modal
+            document.getElementById("logout-modal").style.display = "block";
+        });
+
+        // Cancel button functionality
+        document.getElementById("cancel-btn").addEventListener("click", function () {
+            // Hide the modal
+            document.getElementById("logout-modal").style.display = "none";
+        });
+
+        // Confirm logout functionality
+        document.getElementById("confirm-logout-btn").addEventListener("click", function () {
+            // Clear all local storage data
+            localStorage.clear();
+
+            // Redirect to login page
+            window.location.href = "pw0.html";
+        });
     </script>
 </body>
 
