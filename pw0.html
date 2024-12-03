@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Page</title>
+  <style>
+    body {
+      background-image: url('dkbk.png');
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .password-input {
+      width: 177px;
+      height: 40px;
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 20px;
+      border-radius: 15px;
+      border: 2px solid #fff;
+      background: transparent;
+      color: #fff;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+      width: 180px;
+      margin-bottom: 10px;
+    }
+
+    .num-button {
+      width: 50px;
+      height: 50px;
+      font-size: 18px;
+      color: #fff;
+      background-color: transparent;
+      border: 2px solid #fff;
+      border-radius: 5px;
+    }
+
+    .submit-button {
+      width: 180px;
+      height: 40px;
+      font-size: 18px;
+      background-color: #fff;
+      border: none;
+      border-radius: 15px;
+      color: #000;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .forgot-password {
+      color: #fff;
+      text-decoration: underline;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .reset-container {
+      display: none;
+      background: transparent;
+      padding: 10px;
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+
+    .reset-container input {
+      width: 200px;
+      height: 40px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 18px;
+      border-radius: 15px;
+      border: 2px solid #fff;
+      background: transparent;
+      color: #fff;
+    }
+
+    .reset-button {
+      width: 180px;
+      height: 40px;
+      font-size: 18px;
+      background-color: #fff;
+      border: none;
+      border-radius: 15px;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .back-button {
+      width: 180px;
+      height: 40px;
+      font-size: 18px;
+      background-color: red;
+      border: none;
+      border-radius: 15px;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .error-message, .success-message {
+      color: #fff;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .error-message {
+      color: red;
+    }
+
+    .success-message {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div id="initial-container" class="container">
+    <input type="password" id="password-input" maxlength="4" placeholder="Enter 4 digits" class="password-input">
+    <div class="button-row">
+      <button class="num-button" onclick="addNumber(1)">1</button>
+      <button class="num-button" onclick="addNumber(2)">2</button>
+      <button class="num-button" onclick="addNumber(3)">3</button>
+    </div>
+    <div class="button-row">
+      <button class="num-button" onclick="addNumber(4)">4</button>
+      <button class="num-button" onclick="addNumber(5)">5</button>
+      <button class="num-button" onclick="addNumber(6)">6</button>
+    </div>
+    <div class="button-row">
+      <button class="num-button" onclick="addNumber(7)">7</button>
+      <button class="num-button" onclick="addNumber(8)">8</button>
+      <button class="num-button" onclick="addNumber(9)">9</button>
+    </div>
+    <div class="button-row">
+      <button class="num-button" onclick="addNumber(0)">0</button>
+      <button class="num-button" onclick="deleteNumber()">Dlt</button>
+    </div>
+    <button class="submit-button" onclick="checkPassword()">Enter</button>
+    <div class="forgot-password" onclick="showResetForm()">Forgot Password?</div>
+    <button class="back-button" onclick="goBack()">Back</button>
+    <div id="message-container">
+      <div id="error-message" class="error-message"></div>
+      <div id="success-message" class="success-message"></div>
+    </div>
+  </div>
+
+  <div id="reset-container" class="reset-container">
+    <input type="text" id="wallet-address" placeholder="Your wallet address">
+    <input type="password" id="new-password" placeholder="Enter a new password">
+    <button class="reset-button" onclick="resetPassword()">Reset Password</button>
+    <button class="back-button" onclick="showInitialContainer()">Back</button>
+  </div>
+  
+  <div id="reset-message-container">
+    <div id="reset-error-message" class="error-message"></div>
+    <div id="reset-success-message" class="success-message"></div>
+  </div>
+
+  <script>
+    function addNumber(number) {
+      const passwordInput = document.getElementById("password-input");
+      if (passwordInput.value.length < 4) {
+        passwordInput.value += number;
+      }
+    }
+
+    function deleteNumber() {
+      const passwordInput = document.getElementById("password-input");
+      passwordInput.value = passwordInput.value.slice(0, -1);
+    }
+
+    function checkPassword() {
+      const passwordInput = document.getElementById("password-input");
+      const savedPassword = localStorage.getItem("password");
+
+      if (!savedPassword) {
+        localStorage.setItem("password", passwordInput.value);
+        displayMessage('success', "Password set successfully, Tap enter!!");
+        return;
+      }
+
+      if (passwordInput.value === savedPassword) {
+        displayMessage('success', "Password correct!");
+        window.location.href = "bk.html";
+      } else {
+        displayMessage('error', "Incorrect password.");
+      }
+    }
+
+    function displayMessage(type, message) {
+      const messageContainer = document.getElementById(type === 'error' ? 'error-message' : 'success-message');
+      messageContainer.textContent = message;
+      messageContainer.style.display = 'block';
+      setTimeout(() => {
+        messageContainer.style.display = 'none';
+      }, 6000);
+    }
+
+    function showResetForm() {
+      document.getElementById("initial-container").style.display = "none";
+      document.getElementById("reset-container").style.display = "block";
+    }
+
+    function showInitialContainer() {
+      document.getElementById("reset-container").style.display = "none";
+      document.getElementById("initial-container").style.display = "block";
+    }
+
+    function resetPassword() {
+      const walletAddress = document.getElementById("wallet-address").value;
+      const savedWallet = localStorage.getItem("walletAddress");
+      const newPassword = document.getElementById("new-password").value;
+
+      if (walletAddress === savedWallet) {
+        if (newPassword && newPassword.length === 4) {
+          localStorage.setItem("password", newPassword);
+          displayResetMessage('success', "Password reset successfully.");
+          window.location.href = "login.html";
+        } else {
+          displayResetMessage('error', "Invalid password.");
+        }
+      } else {
+        displayResetMessage('error', "Wallet address does not match. Unable to reset password.");
+      }
+    }
+
+    function displayResetMessage(type, message) {
+      const messageContainer = document.getElementById(type === 'error' ? 'reset-error-message' : 'reset-success-message');
+      messageContainer.textContent = message;
+      messageContainer.style.display = 'block';
+      setTimeout(() => {
+        messageContainer.style.display = 'none';
+      }, 6000);
+    }
+
+    function goBack() {
+      history.back();
+    }
+
+    window.onload = function () {
+      if (!localStorage.getItem("password")) {
+        displayMessage('error', "Please set a password.");
+      }
+    };
+  </script>
+</body>
+</html>
