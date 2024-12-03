@@ -218,8 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
             else if (balance <= 2500) imageSrc = "1g.png";
             else if (balance <= 4000) imageSrc = "1h.png";
             else if (balance <= 8000) imageSrc = "1i.png";
-            else if (balance <= 12000) imageSrc = "1k.png";
-            else imageSrc = "1j.png";
+            else if (balance <= 12000) imageSrc = "1j.png";
+            else if (balance <= 20000) imageSrc = "1k.png";
+            else imageSrc = "1l.png";
 
             dynamicImage.src = imageSrc;
         }
