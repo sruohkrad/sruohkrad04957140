@@ -60,23 +60,7 @@ section p {
     border-radius: 8px; /* Rounds edges to make them less sharp */
     padding: 10px;
     display: inline-block;
-    background-color: rgba(0, 0, 0, 0.7);
-    animation: borderGlow 3s infinite;
-    box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
 }
-@keyframes borderGlow {
-      0% {
-          border-color: #00ff00;
-          box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
-      }
-      50% {
-          border-color: #008000;
-          box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.9);
-      }
-      100% {
-          border-color: #00ff00;
-          box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
-      }
 
 /* Task List Styles */
 .task-list {
@@ -136,7 +120,7 @@ button {
     background-color: #ffffff;
     color: #121212;
     border: none;
-    padding: 10px 20px;
+    padding: 5px 16px;
     font-size: 1.2rem;
     font-weight: bold;
     border-radius: 20px;
