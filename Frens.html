@@ -115,9 +115,9 @@
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 14px; /* Moves it down 14px from the top */
+            left: 50%; /* Positions the element relative to the horizontal center */
+            transform: translateX(-50%); /* Centers the element horizontally */
             width: 80%;
             height: 60%;
             background: rgba(0, 0, 0, 0.7);
