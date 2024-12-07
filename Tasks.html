@@ -47,23 +47,24 @@
             box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
        }
 
-    @keyframes borderGlow {
-        0% {
-            border-color: #00ff00;
-            box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+        @keyframes borderGlow {
+            0% {
+                border-color: #00ff00;
+                box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+            }
+            50% {
+                border-color: #008000;
+                box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.9);
+            }
+            100% {
+                border-color: #00ff00;
+                box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
+            }
         }
-        50% {
-            border-color: #008000;
-            box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.9);
-        }
-        100% {
-            border-color: #00ff00;
-            box-shadow: 0px 0px 15px rgba(0, 255, 0, 0.7);
-        }
-        };
+
         .task button {
             margin-top: 1rem;
-            padding: 0.7rem 1.5rem;
+            padding: 0rem 1.5rem;
             width: 80%;
             border: 2px solid #ddd;
             border-radius: 15px;
@@ -236,7 +237,7 @@
 </head>
 <body>
 <header>
-    <h3>Complete the task fairly or claim your hours fearly</h3>
+    <h3>Complete the task fairly or claim your hours fairly</h3>
 </header>
 
 <ul id="taskList">
@@ -256,11 +257,11 @@
 
 <script>
     const tasks = [
-        { id: 16, description: "Subscribe to our YouTube (+10 hours)", link: "https://www.youtube.com/@globaldarkhours", code: "1234" },
-        { id: 17, description: "Follow our Twitter (+10 hours)", link: "https://x.com/globaldarkhours?t=TMWb9X-ZucSkKRfNNKVhJg&s=09", code: "5678" },
-        { id: 18, description: "Join our Telegram (+10 hours)", link: "https://t.me/Official_Dark_Hours", code: "1011" },
-        { id: 19, description: "Follow our Instagram (+10 hours)", link: "https://www.instagram.com/officialdarkhours?igsh=MXBwOXRwbnZtNml6bA==", code: "1213" },
-        { id: 20, description: "Follow our TikTok (+10 hours)", link: "https://www.tiktok.com/@officialdarkhours?_t=8rbp4JIrHQG&_r=1", code: "1415" },
+        { id: 21, description: "Subscribe to our YouTube (+10 hours)", link: "https://www.youtube.com/@globaldarkhours", code: "1234" },
+        { id: 22, description: "Follow our Twitter (+10 hours)", link: "https://x.com/globaldarkhours?t=TMWb9X-ZucSkKRfNNKVhJg&s=09", code: "5678" },
+        { id: 23, description: "Join our Telegram (+10 hours)", link: "https://t.me/Official_Dark_Hours", code: "1011" },
+        { id: 24, description: "Follow our Instagram (+10 hours)", link: "https://www.instagram.com/officialdarkhours?igsh=MXBwOXRwbnZtNml6bA==", code: "1213" },
+        { id: 25, description: "Follow our TikTok (+10 hours)", link: "https://www.tiktok.com/@officialdarkhours?_t=8rbp4JIrHQG&_r=1", code: "1415" },
     ];
 
     const taskList = document.getElementById('taskList');
@@ -305,11 +306,12 @@
             const startButton = document.getElementById(`start-${task.id}`);
 
             startButton.addEventListener('click', () => {
+                startButton.disabled = true; // Disable the button once clicked
                 window.open(task.link, '_blank');
 
                 setTimeout(() => {
                     startButton.classList.add('hidden');
-
+                    
                     const codeInput = document.createElement('input');
                     codeInput.type = 'text';
                     codeInput.placeholder = 'Paste the codes on the account';
